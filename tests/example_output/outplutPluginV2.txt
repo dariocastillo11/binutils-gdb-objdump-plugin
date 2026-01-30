@@ -1,0 +1,351 @@
+In archive testArm.a:
+=== NEW FILE: test1.o ===
+
+
+
+test1.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-littlearm)
+
+
+
+00000000 <add>:
+###   [LABEL] add (Type: FUNCTION, Address: 0x0)###
+
+
+   0:	[Instruction #1]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+   4:	[Instruction #2]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+   8:	[Instruction #3]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+   c:	[Instruction #4]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  10:	[Instruction #5]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  14:	[Instruction #6]  # ATOMIC # STRING-OP # REX.W=1
+e51b2008 	ldr	r2, [fp, #-8]
+  18:	[Instruction #7]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  1c:	[Instruction #8]  # ATOMIC # STRING-OP
+e0823003 	add	r3, r2, r3
+  20:	[Instruction #9]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  24:	[Instruction #10]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  28:	[Instruction #11]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  2c:	[Instruction #12]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+=== NEW FILE: test2.o ===
+
+
+
+test2.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-littlearm)
+
+
+
+00000000 <add>:
+###   [LABEL] add (Type: FUNCTION, Address: 0x0)###
+
+
+   0:	[Instruction #13]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+   4:	[Instruction #14]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+   8:	[Instruction #15]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+   c:	[Instruction #16]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  10:	[Instruction #17]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  14:	[Instruction #18]  # ATOMIC # STRING-OP # REX.W=1
+e51b2008 	ldr	r2, [fp, #-8]
+  18:	[Instruction #19]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  1c:	[Instruction #20]  # ATOMIC # STRING-OP
+e0823003 	add	r3, r2, r3
+  20:	[Instruction #21]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  24:	[Instruction #22]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  28:	[Instruction #23]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  2c:	[Instruction #24]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+
+00000030 <sub>:
+###   [LABEL] sub (Type: FUNCTION, Address: 0x30)###
+
+
+  30:	[Instruction #25]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+  34:	[Instruction #26]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+  38:	[Instruction #27]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+  3c:	[Instruction #28]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  40:	[Instruction #29]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  44:	[Instruction #30]  # ATOMIC # STRING-OP # REX.W=1
+e51b2008 	ldr	r2, [fp, #-8]
+  48:	[Instruction #31]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  4c:	[Instruction #32]  # ATOMIC # STRING-OP
+e0423003 	sub	r3, r2, r3
+  50:	[Instruction #33]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  54:	[Instruction #34]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  58:	[Instruction #35]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  5c:	[Instruction #36]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+=== NEW FILE: test3.o ===
+
+
+
+test3.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-littlearm)
+
+
+
+00000000 <mul>:
+###   [LABEL] mul (Type: FUNCTION, Address: 0x0)###
+
+
+   0:	[Instruction #37]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+   4:	[Instruction #38]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+   8:	[Instruction #39]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+   c:	[Instruction #40]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  10:	[Instruction #41]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  14:	[Instruction #42]  # ATOMIC # STRING-OP # REX.W=1
+e51b3008 	ldr	r3, [fp, #-8]
+  18:	[Instruction #43]  # ATOMIC # STRING-OP # REX.W=1
+e51b200c 	ldr	r2, [fp, #-12]
+  1c:	[Instruction #44]  # ATOMIC # STRING-OP # REX.W=1
+e0030392 	mul	r3, r2, r3
+  20:	[Instruction #45]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  24:	[Instruction #46]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  28:	[Instruction #47]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  2c:	[Instruction #48]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+
+00000030 <div>:
+###   [LABEL] div (Type: FUNCTION, Address: 0x30)###
+
+
+  30:	[Instruction #49]  # ATOMIC # STRING-OP
+e92d4800 	push	{fp, lr}
+  34:	[Instruction #50]  # ATOMIC # STRING-OP
+e28db004 	add	fp, sp, #4
+  38:	[Instruction #51]  # ATOMIC # STRING-OP
+e24dd008 	sub	sp, sp, #8
+  3c:	[Instruction #52]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  40:	[Instruction #53]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  44:	[Instruction #54]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  48:	[Instruction #55]  # ATOMIC # STRING-OP
+e3530000 	cmp	r3, #0
+  4c:	[Instruction #56]  # ATOMIC # STRING-OP
+1a000001 	bne	58 <div+0x28>
+  50:	[Instruction #57]  # ATOMIC # STRING-OP # REX.W=1
+e3a03000 	mov	r3, #0
+  54:	[Instruction #58]  # ATOMIC # STRING-OP
+ea000003 	b	68 <div+0x38>
+  58:	[Instruction #59]  # ATOMIC # STRING-OP # REX.W=1
+e51b100c 	ldr	r1, [fp, #-12]
+  5c:	[Instruction #60]  # ATOMIC # STRING-OP # REX.W=1
+e51b0008 	ldr	r0, [fp, #-8]
+  60:	[Instruction #61]  # ATOMIC # STRING-OP
+ebfffffe 	bl	0 <__aeabi_idiv>
+  64:	[Instruction #62]  # ATOMIC # STRING-OP # REX.W=1
+e1a03000 	mov	r3, r0
+  68:	[Instruction #63]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  6c:	[Instruction #64]  # ATOMIC # STRING-OP
+e24bd004 	sub	sp, fp, #4
+  70:	[Instruction #65]  # ATOMIC # STRING-OP
+e8bd8800 	pop	{fp, pc}
+=== NEW FILE: test4.o ===
+
+
+
+test4.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-littlearm)
+
+
+
+00000000 <mul>:
+###   [LABEL] mul (Type: FUNCTION, Address: 0x0)###
+
+
+   0:	[Instruction #66]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+   4:	[Instruction #67]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+   8:	[Instruction #68]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+   c:	[Instruction #69]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  10:	[Instruction #70]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  14:	[Instruction #71]  # ATOMIC # STRING-OP # REX.W=1
+e51b3008 	ldr	r3, [fp, #-8]
+  18:	[Instruction #72]  # ATOMIC # STRING-OP # REX.W=1
+e51b200c 	ldr	r2, [fp, #-12]
+  1c:	[Instruction #73]  # ATOMIC # STRING-OP # REX.W=1
+e0030392 	mul	r3, r2, r3
+  20:	[Instruction #74]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  24:	[Instruction #75]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  28:	[Instruction #76]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  2c:	[Instruction #77]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+
+00000030 <div>:
+###   [LABEL] div (Type: FUNCTION, Address: 0x30)###
+
+
+  30:	[Instruction #78]  # ATOMIC # STRING-OP
+e92d4800 	push	{fp, lr}
+  34:	[Instruction #79]  # ATOMIC # STRING-OP
+e28db004 	add	fp, sp, #4
+  38:	[Instruction #80]  # ATOMIC # STRING-OP
+e24dd008 	sub	sp, sp, #8
+  3c:	[Instruction #81]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  40:	[Instruction #82]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  44:	[Instruction #83]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  48:	[Instruction #84]  # ATOMIC # STRING-OP
+e3530000 	cmp	r3, #0
+  4c:	[Instruction #85]  # ATOMIC # STRING-OP
+1a000001 	bne	58 <div+0x28>
+  50:	[Instruction #86]  # ATOMIC # STRING-OP # REX.W=1
+e3a03000 	mov	r3, #0
+  54:	[Instruction #87]  # ATOMIC # STRING-OP
+ea000003 	b	68 <div+0x38>
+  58:	[Instruction #88]  # ATOMIC # STRING-OP # REX.W=1
+e51b100c 	ldr	r1, [fp, #-12]
+  5c:	[Instruction #89]  # ATOMIC # STRING-OP # REX.W=1
+e51b0008 	ldr	r0, [fp, #-8]
+  60:	[Instruction #90]  # ATOMIC # STRING-OP
+ebfffffe 	bl	0 <__aeabi_idiv>
+  64:	[Instruction #91]  # ATOMIC # STRING-OP # REX.W=1
+e1a03000 	mov	r3, r0
+  68:	[Instruction #92]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  6c:	[Instruction #93]  # ATOMIC # STRING-OP
+e24bd004 	sub	sp, fp, #4
+  70:	[Instruction #94]  # ATOMIC # STRING-OP
+e8bd8800 	pop	{fp, pc}
+
+00000074 <add>:
+###   [LABEL] add (Type: FUNCTION, Address: 0x74)###
+
+
+  74:	[Instruction #95]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+  78:	[Instruction #96]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+  7c:	[Instruction #97]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+  80:	[Instruction #98]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  84:	[Instruction #99]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  88:	[Instruction #100]  # ATOMIC # STRING-OP # REX.W=1
+e51b2008 	ldr	r2, [fp, #-8]
+  8c:	[Instruction #101]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  90:	[Instruction #102]  # ATOMIC # STRING-OP
+e0823003 	add	r3, r2, r3
+  94:	[Instruction #103]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  98:	[Instruction #104]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  9c:	[Instruction #105]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  a0:	[Instruction #106]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+
+000000a4 <sub>:
+###   [LABEL] sub (Type: FUNCTION, Address: 0xa4)###
+
+
+  a4:	[Instruction #107]  # ATOMIC # STRING-OP
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+  a8:	[Instruction #108]  # ATOMIC # STRING-OP
+e28db000 	add	fp, sp, #0
+  ac:	[Instruction #109]  # ATOMIC # STRING-OP
+e24dd00c 	sub	sp, sp, #12
+  b0:	[Instruction #110]  # ATOMIC # STRING-OP
+e50b0008 	str	r0, [fp, #-8]
+  b4:	[Instruction #111]  # ATOMIC # STRING-OP
+e50b100c 	str	r1, [fp, #-12]
+  b8:	[Instruction #112]  # ATOMIC # STRING-OP # REX.W=1
+e51b2008 	ldr	r2, [fp, #-8]
+  bc:	[Instruction #113]  # ATOMIC # STRING-OP # REX.W=1
+e51b300c 	ldr	r3, [fp, #-12]
+  c0:	[Instruction #114]  # ATOMIC # STRING-OP
+e0423003 	sub	r3, r2, r3
+  c4:	[Instruction #115]  # ATOMIC # STRING-OP # REX.W=1
+e1a00003 	mov	r0, r3
+  c8:	[Instruction #116]  # ATOMIC # STRING-OP
+e28bd000 	add	sp, fp, #0
+  cc:	[Instruction #117]  # ATOMIC # STRING-OP
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+  d0:	[Instruction #118]  # ATOMIC # STRING-OP
+e12fff1e 	bx	lr
+
+[INFO] Instructions written to: disasm_output.txt
+
+╔════════════════════════════════════════════════════════╗
+║               INSTRUCTION STATISTICS                   ║
+║ Architecture: elf32-littlearm                          ║
+╠════════════════════════════════════════════════════════╣
+║ Total files processed:                 4 
+║ Total sections processed:              4 
+║ Total labels processed:                9 
+║ Total instructions:                    118 
+║ Invalid instructions (BAD):            0 
+╠════════════════════════════════════════════════════════╣
+║ Calls (CALL):                          0 
+║ Jumps (JUMP):                          0 
+║ Returns (RET):                         0 
+║ Instructions with REX.W:               35 
+║ Atomic operations (LOCK):              118 
+║ String operations (REP):               118 
+║ Stack canaries detected:               0 
+╚════════════════════════════════════════════════════════╝
+║ Regex pattern dereference (file):      0        
+║ Regex pattern indirect call (file):    0        
+╚════════════════════════════════════════════════════════╝
+
