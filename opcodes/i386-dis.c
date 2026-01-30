@@ -1,5 +1,5 @@
 /* Print i386 instructions for GDB, the GNU debugger.
-   Copyright (C) 1988-2026 Free Software Foundation, Inc.
+   Copyright (C) 1988-2025 Free Software Foundation, Inc.
 
    This file is part of the GNU opcodes library.
 
@@ -35,11 +35,16 @@
 #include "sysdep.h"
 #include "disassemble.h"
 #include "opintl.h"
-#include "opcode/i386.h"
+#include "../include/opcode/i386.h"
 #include "libiberty.h"
 #include "safe-ctype.h"
+#include <string.h>
+#include "../plugins/objdump_plugin_i386.h"
 
 typedef struct instr_info instr_info;
+
+extern void instruccion_hook(struct instr_info *ins) __attribute__((weak));
+extern void bad_instruccion_hook(const char *bad_reason) __attribute__((weak));
 
 static bool dofloat (instr_info *, int);
 static int putop (instr_info *, const char *, int);
@@ -121,157 +126,15 @@ static void ATTRIBUTE_PRINTF_3 i386_dis_printf (const disassemble_info *,
 /* The maximum operand buffer size.  */
 #define MAX_OPERAND_BUFFER_SIZE 128
 
-enum address_mode
-{
-  mode_16bit,
-  mode_32bit,
-  mode_64bit
-};
+/* Los enums se definen en el header i386_dis_info.h incluido a través de objdump_plugin.h */
 
 static const char *prefix_name (enum address_mode, uint8_t, int);
 
-enum x86_64_isa
-{
-  amd64 = 1,
-  intel64
-};
-
-enum evex_type
-{
-  evex_default = 0,
-  evex_from_legacy,
-  evex_from_vex,
-};
-
-struct instr_info
-{
-  enum address_mode address_mode;
-
-  /* Flags for the prefixes for the current instruction.  See below.  */
-  int prefixes;
-
-  /* REX prefix the current instruction.  See below.  */
-  uint8_t rex;
-  /* Bits of REX we've already used.  */
-  uint8_t rex_used;
-
-  /* Record W R4 X4 B4 bits for rex2.  */
-  unsigned char rex2;
-  /* Bits of rex2 we've already used.  */
-  unsigned char rex2_used;
-  unsigned char rex2_payload;
-
-  bool need_modrm;
-  unsigned char condition_code;
-  unsigned char need_vex;
-  bool has_sib;
-
-  /* Flags for ins->prefixes which we somehow handled when printing the
-     current instruction.  */
-  int used_prefixes;
-
-  /* Flags for EVEX bits which we somehow handled when printing the
-     current instruction.  */
-  int evex_used;
-
-  char obuf[MAX_OPERAND_BUFFER_SIZE];
-  char *obufp;
-  char *mnemonicendp;
-  const uint8_t *start_codep;
-  uint8_t *codep;
-  const uint8_t *end_codep;
-  unsigned char nr_prefixes;
-  signed char last_lock_prefix;
-  signed char last_repz_prefix;
-  signed char last_repnz_prefix;
-  signed char last_data_prefix;
-  signed char last_addr_prefix;
-  signed char last_rex_prefix;
-  signed char last_rex2_prefix;
-  signed char last_seg_prefix;
-  signed char fwait_prefix;
-  /* The active segment register prefix.  */
-  unsigned char active_seg_prefix;
-
-#define MAX_CODE_LENGTH 15
-  /* We can up to 14 ins->prefixes since the maximum instruction length is
-     15bytes.  */
-  uint8_t all_prefixes[MAX_CODE_LENGTH - 1];
-  disassemble_info *info;
-
-  struct
-  {
-    int mod;
-    int reg;
-    int rm;
-  }
-  modrm;
-
-  struct
-  {
-    int scale;
-    int index;
-    int base;
-  }
-  sib;
-
-  struct
-  {
-    int register_specifier;
-    int length;
-    int prefix;
-    int mask_register_specifier;
-    int scc;
-    int ll;
-    bool w;
-    bool evex;
-    bool v;
-    bool zeroing;
-    bool b;
-    bool no_broadcast;
-    bool nf;
-  }
-  vex;
+/* struct instr_info se define en i386_dis_info.h */
 
 /* For APX EVEX-promoted prefix, EVEX.ND shares the same bit as vex.b.  */
+
 #define nd b
-
-  enum evex_type evex_type;
-
-  /* Remember if the current op is a jump instruction.  */
-  bool op_is_jump;
-
-  bool two_source_ops;
-
-  /* Record whether EVEX masking is used incorrectly.  */
-  bool illegal_masking;
-
-  /* Record whether the modrm byte has been skipped.  */
-  bool has_skipped_modrm;
-
-  unsigned char op_ad;
-  signed char op_index[MAX_OPERANDS];
-  bool op_riprel[MAX_OPERANDS];
-  char *op_out[MAX_OPERANDS];
-  bfd_vma op_address[MAX_OPERANDS];
-  bfd_vma start_pc;
-
-  /* On the 386's of 1988, the maximum length of an instruction is 15 bytes.
-   *   (see topic "Redundant ins->prefixes" in the "Differences from 8086"
-   *   section of the "Virtual 8086 Mode" chapter.)
-   * 'pc' should be the address of this instruction, it will
-   *   be used to print the target address if this is a relative jump or call
-   * The function returns the length of this instruction in bytes.
-   */
-  char intel_syntax;
-  bool intel_mnemonic;
-  char open_char;
-  char close_char;
-  char separator_char;
-  char scale_char;
-
-  enum x86_64_isa isa64;
-};
 
 struct dis_private {
   bfd_vma insn_start;
@@ -378,7 +241,7 @@ fetch_error (const instr_info *ins)
   /* Getting here means we tried for data but didn't get it.  That
      means we have an incomplete instruction of some sort.  Just
      print the first byte as a prefix or a .byte pseudo-op.  */
-  const struct dis_private *priv = ins->info->private_data;
+  const struct dis_private *priv = ((const disassemble_info *)ins->info)->private_data;
   const char *name = NULL;
 
   if (ins->codep <= priv->the_buffer)
@@ -9716,6 +9579,7 @@ i386_dis_printf (const disassemble_info *info, enum disassembler_style style,
   while (true);
 }
 
+
 static int
 print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
 {
@@ -9750,6 +9614,9 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
     .last_rex2_prefix = -1,
     .last_seg_prefix = -1,
     .fwait_prefix = -1,
+    .mnemonic = {0},  /* Initialize mnemonic field */
+    .operands = {0},  /* Initialize operands field */
+    .priv = (void *)&priv,  /* Store pointer to priv for later use */
   };
   char op_out[MAX_OPERANDS][MAX_OPERAND_BUFFER_SIZE];
 
@@ -10098,6 +9965,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
       if (!ins.vex.nd && (ins.vex.register_specifier || !ins.vex.v))
 	{
 	  i386_dis_printf (info, dis_style_text, "(bad)");
+	  if (bad_instruccion_hook) bad_instruccion_hook("EVEX from legacy: invalid vvvv/V bits");
 	  ret = ins.end_codep - priv.the_buffer;
 	  goto out;
 	}
@@ -10108,6 +9976,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
 	  || ins.vex.ll != 0 || ins.vex.zeroing != 0)
 	{
 	  i386_dis_printf (info, dis_style_text, "(bad)");
+	  if (bad_instruccion_hook) bad_instruccion_hook("EVEX from legacy: invalid z/L/aaa bits");
 	  ret = ins.end_codep - priv.the_buffer;
 	  goto out;
 	}
@@ -10117,6 +9986,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
   if (ins.need_vex && ins.vex.register_specifier != 0)
     {
       i386_dis_printf (info, dis_style_text, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("VEX.vvvv unused but not all 1s");
       ret = ins.end_codep - priv.the_buffer;
       goto out;
     }
@@ -10125,6 +9995,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
       && ins.last_rex2_prefix >= 0 && (ins.rex2 & REX2_SPECIAL) == 0)
     {
       i386_dis_printf (info, dis_style_text, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("REX2 prefix illegal");
       ret = ins.end_codep - priv.the_buffer;
       goto out;
     }
@@ -10137,6 +10008,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
       if (ins.need_vex ? !ins.vex.prefix : !(ins.prefixes & PREFIX_DATA))
 	{
 	  i386_dis_printf (info, dis_style_text, "(bad)");
+	  if (bad_instruccion_hook) bad_instruccion_hook("Missing mandatory PREFIX_DATA");
 	  ret = ins.end_codep - priv.the_buffer;
 	  goto out;
 	}
@@ -10165,6 +10037,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
 	      && !ins.vex.w != !(ins.used_prefixes & PREFIX_DATA)))
 	{
 	  i386_dis_printf (info, dis_style_text, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("Missing mandatory PREFIX_OPCODE");
 	  ret = ins.end_codep - priv.the_buffer;
 	  goto out;
 	}
@@ -10187,6 +10060,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
 	  || ins.vex.prefix == REPNE_PREFIX_OPCODE)
 	{
 	  i386_dis_printf (info, dis_style_text, "(bad)");
+	  if (bad_instruccion_hook) bad_instruccion_hook("Invalid REP prefix for PREFIX_NP_OR_DATA");
 	  ret = ins.end_codep - priv.the_buffer;
 	  goto out;
 	}
@@ -10196,6 +10070,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
       if (ins.vex.prefix)
 	{
 	  i386_dis_printf (info, dis_style_text, "(bad)");
+	  if (bad_instruccion_hook) bad_instruccion_hook("No prefix required but prefix present");
 	  ret = ins.end_codep - priv.the_buffer;
 	  goto out;
 	}
@@ -10254,6 +10129,7 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
   if ((ins.codep - ins.start_codep) > MAX_CODE_LENGTH)
     {
       i386_dis_printf (info, dis_style_text, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("Instruction exceeds maximum code length");
       ret = MAX_CODE_LENGTH;
       goto out;
     }
@@ -10276,6 +10152,23 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
     }
   else
     i = 0;
+
+  /* Save mnemonic for plugin BEFORE printing*/
+  {
+    int idx = 0;
+    ptrdiff_t mnem_len = ins.mnemonicendp - ins.obuf;
+    for (ptrdiff_t j = 0; j < mnem_len && idx < (int)sizeof(ins.mnemonic) - 1; )
+      {
+        if (j + 2 < mnem_len && ins.obuf[j] == '\002' && ins.obuf[j+2] == '\002')
+          {
+            j += 3;
+            continue;
+          }
+        ins.mnemonic[idx++] = ins.obuf[j];
+        j++;
+      }
+    ins.mnemonic[idx] = '\0';
+  }
 
   /* Print the instruction mnemonic along with any trailing whitespace.  */
   i386_dis_printf (info, dis_style_mnemonic, "%s%*s", ins.obuf, i, "");
@@ -10313,6 +10206,33 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
       for (i = 0; i < MAX_OPERANDS; ++i)
 	op_txt[MAX_OPERANDS - 1 - i] = ins.op_out[i];
     }
+
+  /* Save operands for plugin*/
+  ins.operands[0] = '\0';
+  {
+    int first = 1;
+    char temp_op[128];
+    for (i = 0; i < MAX_OPERANDS; ++i)
+      if (*op_txt[i])
+        {
+          int src = 0, dst = 0;
+          while (op_txt[i][src] != '\0' && dst < (int)sizeof(temp_op) - 1)
+            {
+              if (op_txt[i][src] == '\002' && op_txt[i][src+1] != '\0' && op_txt[i][src+2] == '\002')
+                {
+                  src += 3;
+                  continue;
+                }
+              temp_op[dst++] = op_txt[i][src++];
+            }
+          temp_op[dst] = '\0';
+          if (!first && strlen(ins.operands) + 2 < sizeof(ins.operands))
+            strcat(ins.operands, ", ");
+          if (strlen(ins.operands) + strlen(temp_op) < sizeof(ins.operands))
+            strcat(ins.operands, temp_op);
+          first = 0;
+        }
+  }
 
   needcomma = 0;
   for (i = 0; i < MAX_OPERANDS; ++i)
@@ -10363,7 +10283,35 @@ print_insn (bfd_vma pc, disassemble_info *info, int intel_syntax)
 	  info);
 	break;
       }
+  
+  /* Fill mnemonic from obuf/mnemonicendp for plugin access */
+  ptrdiff_t final_mnem_len = ins.mnemonicendp - ins.obuf;
+  if (final_mnem_len == 0)
+    {
+      /* obuf is empty, try to extract from what was printed. For now, just mark as empty */
+      ins.mnemonic[0] = '\0';
+    }
+  else
+    {
+      int idx = 0;
+      for (ptrdiff_t i_final = 0; i_final < final_mnem_len && idx < (int)sizeof(ins.mnemonic) - 1; )
+        {
+          /* Skip style markers */
+          if (i_final + 2 < final_mnem_len && ins.obuf[i_final] == '\002' && ins.obuf[i_final+2] == '\002')
+            {
+              i_final += 3;
+              continue;
+            }
+          ins.mnemonic[idx++] = ins.obuf[i_final];
+          i_final++;
+        }
+      ins.mnemonic[idx] = '\0';
+    }
+  
+  if (instruccion_hook) instruccion_hook(&ins); //Call the hook to notify the decoded instruction
+  
   ret = ins.codep - priv.the_buffer;
+  
  out:
   info->private_data = NULL;
   return ret;
@@ -10813,8 +10761,10 @@ putop (instr_info *ins, const char *in_template, int sizeflag)
   if (!strncmp (in_template, "(bad)", 5))
     {
       oappend (ins, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("Bad instruction encountered");
       *ins->obufp = 0;
       ins->mnemonicendp = ins->obufp;
+      
       return 0;
     }
 
@@ -10897,6 +10847,7 @@ putop (instr_info *ins, const char *in_template, int sizeflag)
 		oappend (ins, "bf16");
 	      else
 		oappend (ins, "{bad}");
+        if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	    }
 	  else
 	    abort ();
@@ -10918,6 +10869,7 @@ putop (instr_info *ins, const char *in_template, int sizeflag)
 	      /* For SCC insns, the ND bit is required to be set to 0.  */
 	      if (ins->vex.nd)
 		oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 
 	      /* These bits have been consumed and should be cleared or restored
 		 to default values.  */
@@ -10950,6 +10902,7 @@ putop (instr_info *ins, const char *in_template, int sizeflag)
 		  *ins->obufp++ = 'd';
 		else
 		  oappend (ins, "{bad}");
+      if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 		break;
 	      default:
 		abort ();
@@ -11128,6 +11081,7 @@ putop (instr_info *ins, const char *in_template, int sizeflag)
 		*ins->obufp++ = 'h';
 	      else
 		oappend (ins, "{bad}");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	    }
 	  else
 	    abort ();
@@ -11334,6 +11288,7 @@ putop (instr_info *ins, const char *in_template, int sizeflag)
 		*ins->obufp++ = 's';
 	      else
 		oappend (ins, "{bad}");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	      break;
 	    default:
 	      abort ();
@@ -11986,6 +11941,7 @@ print_register (instr_info *ins, unsigned int reg, unsigned int rexmask,
       if (reg > 0x3)
 	{
 	  oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	  return;
 	}
       names = att_names_bnd;
@@ -12050,6 +12006,7 @@ print_register (instr_info *ins, unsigned int reg, unsigned int rexmask,
       if (reg > 0x7)
 	{
 	  oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	  return;
 	}
       names = att_names_mask;
@@ -12149,10 +12106,11 @@ static bool
 BadOp (instr_info *ins)
 {
   /* Throw away prefixes and 1st. opcode byte.  */
-  struct dis_private *priv = ins->info->private_data;
+  struct dis_private *priv = ((disassemble_info *)ins->info)->private_data;
 
   ins->codep = priv->the_buffer + ins->nr_prefixes + ins->need_vex + 1;
   ins->obufp = stpcpy (ins->obufp, "(bad)");
+  if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
   return true;
 }
 
@@ -12328,6 +12286,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 		  if (ins->rex2 & REX_X)
 		    {
 		      oappend (ins, "(bad)");
+          if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 		      return true;
 		    }
 
@@ -12380,6 +12339,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 	      || bytemode == vex_sibmem_mode)
 	    {
 	      oappend (ins, "(bad)");
+        if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	      return true;
 	    }
 	}
@@ -12398,6 +12358,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 	      if (riprel && bytemode == v_bndmk_mode)
 		{
 		  oappend (ins, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 		  return true;
 		}
 	    }
@@ -12500,6 +12461,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 			oappend_register (ins, indexes[vindex]);
 		      else
 			oappend (ins, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 		    }
 		  else
 		    oappend_register (ins,
@@ -12537,6 +12499,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 	        modrm_reg += 16;
 	      if (vindex == modrm_reg)
 		oappend (ins, "/(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	    }
 	}
       else if (ins->intel_syntax)
@@ -12560,6 +12523,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 	   || bytemode == vex_vsib_q_w_dq_mode)
     {
       oappend (ins, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
       return true;
     }
   else
@@ -12688,6 +12652,7 @@ OP_E_memory (instr_info *ins, int bytemode, int sizeflag)
 	}
       if (ins->vex.no_broadcast)
 	oappend (ins, "{bad}");
+  if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
     }
 
   return true;
@@ -13320,6 +13285,7 @@ print_vector_reg (instr_info *ins, unsigned int reg, int bytemode)
       if (reg >= 8)
 	{
 	  oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	  return;
 	}
       names = att_names_tmm;
@@ -14019,6 +13985,7 @@ OP_VEX (instr_info *ins, int bytemode, int sizeflag ATTRIBUTE_UNUSED)
       if (ins->vex.evex && !ins->vex.v)
 	{
 	  oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	  return true;
 	}
 
@@ -14069,7 +14036,10 @@ OP_VEX (instr_info *ins, int bytemode, int sizeflag ATTRIBUTE_UNUSED)
     case tmm_mode:
       /* All 3 TMM registers must be distinct.  */
       if (reg >= 8)
-	oappend (ins, "(bad)");
+	{
+	  oappend (ins, "(bad)");
+	  if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
+	}
       else
 	{
 	  /* This must be the 3rd operand.  */
@@ -14127,6 +14097,7 @@ OP_VEX (instr_info *ins, int bytemode, int sizeflag ATTRIBUTE_UNUSED)
 	  if (reg > 0x7)
 	    {
 	      oappend (ins, "(bad)");
+        if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	      return true;
 	    }
 	  names = att_names_mask;
@@ -14154,6 +14125,7 @@ OP_VEX (instr_info *ins, int bytemode, int sizeflag ATTRIBUTE_UNUSED)
 	default:
 	  /* See PR binutils/20893 for a reproducer.  */
 	  oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	  return true;
 	}
       break;
@@ -14446,6 +14418,7 @@ DistinctDest_Fixup (instr_info *ins, int bytemode, int sizeflag)
 	  && modrm_reg == modrm_rm))
     {
       oappend (ins, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
       return true;
     }
   return OP_XMM (ins, bytemode, sizeflag);
@@ -14523,6 +14496,7 @@ PUSH2_POP2_Fixup (instr_info *ins, int bytemode, int sizeflag)
 	  && vvvv_reg == rm_reg))
     {
       oappend (ins, "(bad)");
+      if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
       return true;
     }
 
@@ -14540,6 +14514,7 @@ JMPABS_Fixup (instr_info *ins, int bytemode, int sizeflag)
 	  || (ins->rex & REX_W) != 0x0)
 	{
 	  oappend (ins, "(bad)");
+    if (bad_instruccion_hook) bad_instruccion_hook("bad instruction encountered");
 	  return true;
 	}
 
