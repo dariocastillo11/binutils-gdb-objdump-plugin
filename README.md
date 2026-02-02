@@ -428,7 +428,9 @@ g++ -shared -fPIC -DTARGET_I386 -o objdump_plugin.so ../plugins/objdump_plugin.c
 # Conclusion
 
 ## Comparative Performance Analysis: Plugin vs. JASM vs. Objdump
-![](doc/performance.png)
+
+![](doc/perfomance.png)
+
 This analysis compared the performance of three binary disassembly and analysis tools: native Objdump, the developed plugin for Objdump, and JASM (a parsing tool based on Objdump).
 
 ### Main Results
