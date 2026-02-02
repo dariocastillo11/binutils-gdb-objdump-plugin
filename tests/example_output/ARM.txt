@@ -1,0 +1,408 @@
+[INFO] Plugin loaded successfully
+
+/home/dario.castillo/Desktop/binarios/arquitecturas/programa_arm:     file format elf32-littlearm
+
+
+Disassembly of section .init:
+>>> SECTION: .init (Arch: elf32-littlearm)
+
+
+
+000102d8 <_init>:
+###   [LABEL] _init (Type: FUNCTION, Address: 0x102d8)###
+
+
+   102d8:	[Instruction #1] push  [OPERAND x1] %m
+e92d4008 	push	{r3, lr}
+   102dc:	[Instruction #2] b  [OPERAND x1] %b
+eb000022 	bl	1036c <call_weak_fn>
+   102e0:	[Instruction #3] pop  [OPERAND x1] %m
+e8bd8008 	pop	{r3, pc}
+
+Disassembly of section .plt:
+>>> SECTION: .plt (Arch: elf32-littlearm)
+
+
+
+000102e4 <.plt>:
+###   [LABEL] .plt (Type: SECTION, Address: 0x102e4)###
+
+
+   102e4:	[Instruction #4] push  [OPERAND x1] {%12-15r}
+e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+   102e8:	[Instruction #5] ldr  [OPERAND x2] %12-15r %a
+e59fe004 	ldr	lr, [pc, #4]	@ 102f4 <.plt+0x10>
+   102ec:	[Instruction #6] add  [OPERAND x3] %12-15r %16-19r %o
+e08fe00e 	add	lr, pc, lr
+   102f0:	[Instruction #7] ldr  [OPERAND x2] %12-15r %a
+e5bef008 	ldr	pc, [lr, #8]!
+   102f4:	[BAD] BAD: data not recognized as valid instruction
+00001d0c 	.word	0x00001d0c
+
+000102f8 <__libc_start_main@plt>:
+###   [LABEL] __libc_start_main@plt (Type: FUNCTION, Address: 0x102f8)###
+
+
+   102f8:	[Instruction #8] add  [OPERAND x3] %12-15r %16-19r %o
+e28fc600 	add	ip, pc, #0, 12
+   102fc:	[Instruction #9] add  [OPERAND x3] %12-15r %16-19r %o
+e28cca01 	add	ip, ip, #4096	@ 0x1000
+   10300:	[Instruction #10] ldr  [OPERAND x2] %12-15r %a
+e5bcfd0c 	ldr	pc, [ip, #3340]!	@ 0xd0c
+
+00010304 <printf@plt>:
+###   [LABEL] printf@plt (Type: FUNCTION, Address: 0x10304)###
+
+
+   10304:	[Instruction #11] add  [OPERAND x3] %12-15r %16-19r %o
+e28fc600 	add	ip, pc, #0, 12
+   10308:	[Instruction #12] add  [OPERAND x3] %12-15r %16-19r %o
+e28cca01 	add	ip, ip, #4096	@ 0x1000
+   1030c:	[Instruction #13] ldr  [OPERAND x2] %12-15r %a
+e5bcfd04 	ldr	pc, [ip, #3332]!	@ 0xd04
+
+00010310 <__gmon_start__@plt>:
+###   [LABEL] __gmon_start__@plt (Type: UNKNOWN, Address: 0x10310)###
+
+
+   10310:	[Instruction #14] add  [OPERAND x3] %12-15r %16-19r %o
+e28fc600 	add	ip, pc, #0, 12
+   10314:	[Instruction #15] add  [OPERAND x3] %12-15r %16-19r %o
+e28cca01 	add	ip, ip, #4096	@ 0x1000
+   10318:	[Instruction #16] ldr  [OPERAND x2] %12-15r %a
+e5bcfcfc 	ldr	pc, [ip, #3324]!	@ 0xcfc
+
+0001031c <abort@plt>:
+###   [LABEL] abort@plt (Type: FUNCTION, Address: 0x1031c)###
+
+
+   1031c:	[Instruction #17] add  [OPERAND x3] %12-15r %16-19r %o
+e28fc600 	add	ip, pc, #0, 12
+   10320:	[Instruction #18] add  [OPERAND x3] %12-15r %16-19r %o
+e28cca01 	add	ip, ip, #4096	@ 0x1000
+   10324:	[Instruction #19] ldr  [OPERAND x2] %12-15r %a
+e5bcfcf4 	ldr	pc, [ip, #3316]!	@ 0xcf4
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-littlearm)
+
+
+
+00010328 <_start>:
+###   [LABEL] _start (Type: FUNCTION, Address: 0x10328)###
+
+
+   10328:	[Instruction #20] mov  [OPERAND x2] %12-15r %o
+e3a0b000 	mov	fp, #0
+   1032c:	[Instruction #21] mov  [OPERAND x2] %12-15r %o
+e3a0e000 	mov	lr, #0
+   10330:	[Instruction #22] pop  [OPERAND x1] {%12-15r}
+e49d1004 	pop	{r1}		@ (ldr r1, [sp], #4)
+   10334:	[Instruction #23] mov  [OPERAND x2] %12-15r %0-3r
+e1a0200d 	mov	r2, sp
+   10338:	[Instruction #24] push  [OPERAND x1] {%12-15r}
+e52d2004 	push	{r2}		@ (str r2, [sp, #-4]!)
+   1033c:	[Instruction #25] push  [OPERAND x1] {%12-15r}
+e52d0004 	push	{r0}		@ (str r0, [sp, #-4]!)
+   10340:	[Instruction #26] ldr  [OPERAND x2] %12-15r %a
+e59fa01c 	ldr	sl, [pc, #28]	@ 10364 <_start+0x3c>
+   10344:	[Instruction #27] add  [OPERAND x3] %12-15r %16-19r %o
+e28f3018 	add	r3, pc, #24
+   10348:	[Instruction #28] add  [OPERAND x3] %12-15r %16-19r %o
+e08aa003 	add	sl, sl, r3
+   1034c:	[Instruction #29] mov  [OPERAND x2] %12-15r %o
+e3a03000 	mov	r3, #0
+   10350:	[Instruction #30] push  [OPERAND x1] {%12-15r}
+e52d3004 	push	{r3}		@ (str r3, [sp, #-4]!)
+   10354:	[Instruction #31] ldr  [OPERAND x2] %12-15r %a
+e59f000c 	ldr	r0, [pc, #12]	@ 10368 <_start+0x40>
+   10358:	[Instruction #32] ldr  [OPERAND x2] %12-15r %a
+e79a0000 	ldr	r0, [sl, r0]
+   1035c:	[Instruction #33] b  [OPERAND x1] %b
+ebffffe5 	bl	102f8 <__libc_start_main@plt>
+   10360:	[Instruction #34] b  [OPERAND x1] %b
+ebffffed 	bl	1031c <abort@plt>
+   10364:	[BAD] BAD: data not recognized as valid instruction
+00001c9c 	.word	0x00001c9c
+   10368:	[BAD] BAD: data not recognized as valid instruction
+00000020 	.word	0x00000020
+
+0001036c <call_weak_fn>:
+###   [LABEL] call_weak_fn (Type: FUNCTION, Address: 0x1036c)###
+
+
+   1036c:	[Instruction #35] ldr  [OPERAND x2] %12-15r %a
+e59f3014 	ldr	r3, [pc, #20]	@ 10388 <call_weak_fn+0x1c>
+   10370:	[Instruction #36] ldr  [OPERAND x2] %12-15r %a
+e59f2014 	ldr	r2, [pc, #20]	@ 1038c <call_weak_fn+0x20>
+   10374:	[Instruction #37] add  [OPERAND x3] %12-15r %16-19r %o
+e08f3003 	add	r3, pc, r3
+   10378:	[Instruction #38] ldr  [OPERAND x2] %12-15r %a
+e7932002 	ldr	r2, [r3, r2]
+   1037c:	[Instruction #39] cmp  [OPERAND x2] %16-19r %o%O
+e3520000 	cmp	r2, #0
+   10380:	[Instruction #40] bx  [OPERAND x1] %0-3r%T
+012fff1e 	bxeq	lr
+   10384:	[Instruction #41] b  [OPERAND x1] %b
+eaffffe1 	b	10310 <__gmon_start__@plt>
+   10388:	[BAD] BAD: data not recognized as valid instruction
+00001c84 	.word	0x00001c84
+   1038c:	[BAD] BAD: data not recognized as valid instruction
+0000001c 	.word	0x0000001c
+
+00010390 <deregister_tm_clones>:
+###   [LABEL] deregister_tm_clones (Type: FUNCTION, Address: 0x10390)###
+
+
+   10390:	[Instruction #42] ldr  [OPERAND x2] %12-15r %a
+e59f0018 	ldr	r0, [pc, #24]	@ 103b0 <deregister_tm_clones+0x20>
+   10394:	[Instruction #43] ldr  [OPERAND x2] %12-15r %a
+e59f3018 	ldr	r3, [pc, #24]	@ 103b4 <deregister_tm_clones+0x24>
+   10398:	[Instruction #44] cmp  [OPERAND x2] %16-19r %o%O
+e1530000 	cmp	r3, r0
+   1039c:	[Instruction #45] bx  [OPERAND x1] %0-3r%T
+012fff1e 	bxeq	lr
+   103a0:	[Instruction #46] ldr  [OPERAND x2] %12-15r %a
+e59f3010 	ldr	r3, [pc, #16]	@ 103b8 <deregister_tm_clones+0x28>
+   103a4:	[Instruction #47] cmp  [OPERAND x2] %16-19r %o%O
+e3530000 	cmp	r3, #0
+   103a8:	[Instruction #48] bx  [OPERAND x1] %0-3r%T
+012fff1e 	bxeq	lr
+   103ac:	[Instruction #49] bx  [OPERAND x1] %0-3r%T
+e12fff13 	bx	r3
+   103b0:	[BAD] BAD: data not recognized as valid instruction
+0001202c 	.word	0x0001202c
+   103b4:	[BAD] BAD: data not recognized as valid instruction
+0001202c 	.word	0x0001202c
+   103b8:	[BAD] BAD: data not recognized as valid instruction
+00000000 	.word	0x00000000
+
+000103bc <register_tm_clones>:
+###   [LABEL] register_tm_clones (Type: FUNCTION, Address: 0x103bc)###
+
+
+   103bc:	[Instruction #50] ldr  [OPERAND x2] %12-15r %a
+e59f0024 	ldr	r0, [pc, #36]	@ 103e8 <register_tm_clones+0x2c>
+   103c0:	[Instruction #51] ldr  [OPERAND x2] %12-15r %a
+e59f3024 	ldr	r3, [pc, #36]	@ 103ec <register_tm_clones+0x30>
+   103c4:	[Instruction #52] sub  [OPERAND x3] %12-15r %16-19r %o
+e0433000 	sub	r3, r3, r0
+   103c8:	[Instruction #53] lsr  [OPERAND x2] %12-15R %q
+e1a01fa3 	lsr	r1, r3, #31
+   103cc:	[Instruction #54] add  [OPERAND x3] %12-15r %16-19r %o
+e0811143 	add	r1, r1, r3, asr #2
+   103d0:	[Instruction #55] asr  [OPERAND x2] %12-15R %q
+e1b010c1 	asrs	r1, r1, #1
+   103d4:	[Instruction #56] bx  [OPERAND x1] %0-3r%T
+012fff1e 	bxeq	lr
+   103d8:	[Instruction #57] ldr  [OPERAND x2] %12-15r %a
+e59f3010 	ldr	r3, [pc, #16]	@ 103f0 <register_tm_clones+0x34>
+   103dc:	[Instruction #58] cmp  [OPERAND x2] %16-19r %o%O
+e3530000 	cmp	r3, #0
+   103e0:	[Instruction #59] bx  [OPERAND x1] %0-3r%T
+012fff1e 	bxeq	lr
+   103e4:	[Instruction #60] bx  [OPERAND x1] %0-3r%T
+e12fff13 	bx	r3
+   103e8:	[BAD] BAD: data not recognized as valid instruction
+0001202c 	.word	0x0001202c
+   103ec:	[BAD] BAD: data not recognized as valid instruction
+0001202c 	.word	0x0001202c
+   103f0:	[BAD] BAD: data not recognized as valid instruction
+00000000 	.word	0x00000000
+
+000103f4 <__do_global_dtors_aux>:
+###   [LABEL] __do_global_dtors_aux (Type: FUNCTION, Address: 0x103f4)###
+
+
+   103f4:	[Instruction #61] push  [OPERAND x1] %m
+e92d4010 	push	{r4, lr}
+   103f8:	[Instruction #62] ldr  [OPERAND x2] %12-15r %a
+e59f4018 	ldr	r4, [pc, #24]	@ 10418 <__do_global_dtors_aux+0x24>
+   103fc:	[Instruction #63] ldrb  [OPERAND x2] %12-15R %a
+e5d43000 	ldrb	r3, [r4]
+   10400:	[Instruction #64] cmp  [OPERAND x2] %16-19r %o%O
+e3530000 	cmp	r3, #0
+   10404:	[Instruction #65] pop  [OPERAND x1] %m
+18bd8010 	popne	{r4, pc}
+   10408:	[Instruction #66] b  [OPERAND x1] %b
+ebffffe0 	bl	10390 <deregister_tm_clones>
+   1040c:	[Instruction #67] mov  [OPERAND x2] %12-15r %o
+e3a03001 	mov	r3, #1
+   10410:	[Instruction #68] strb  [OPERAND x2] %12-15R %a
+e5c43000 	strb	r3, [r4]
+   10414:	[Instruction #69] pop  [OPERAND x1] %m
+e8bd8010 	pop	{r4, pc}
+   10418:	[BAD] BAD: data not recognized as valid instruction
+0001202c 	.word	0x0001202c
+
+0001041c <frame_dummy>:
+###   [LABEL] frame_dummy (Type: FUNCTION, Address: 0x1041c)###
+
+
+   1041c:	[Instruction #70] b  [OPERAND x1] %b
+eaffffe6 	b	103bc <register_tm_clones>
+
+00010420 <suma>:
+###   [LABEL] suma (Type: FUNCTION, Address: 0x10420)###
+
+
+   10420:	[Instruction #71] push  [OPERAND x1] {%12-15r}
+e52db004 	push	{fp}		@ (str fp, [sp, #-4]!)
+   10424:	[Instruction #72] add  [OPERAND x3] %12-15r %16-19r %o
+e28db000 	add	fp, sp, #0
+   10428:	[Instruction #73] sub  [OPERAND x3] %12-15r %16-19r %o
+e24dd00c 	sub	sp, sp, #12
+   1042c:	[Instruction #74] str  [OPERAND x2] %12-15r %a
+e50b0008 	str	r0, [fp, #-8]
+   10430:	[Instruction #75] str  [OPERAND x2] %12-15r %a
+e50b100c 	str	r1, [fp, #-12]
+   10434:	[Instruction #76] ldr  [OPERAND x2] %12-15r %a
+e51b2008 	ldr	r2, [fp, #-8]
+   10438:	[Instruction #77] ldr  [OPERAND x2] %12-15r %a
+e51b300c 	ldr	r3, [fp, #-12]
+   1043c:	[Instruction #78] add  [OPERAND x3] %12-15r %16-19r %o
+e0823003 	add	r3, r2, r3
+   10440:	[Instruction #79] mov  [OPERAND x2] %12-15r %0-3r
+e1a00003 	mov	r0, r3
+   10444:	[Instruction #80] add  [OPERAND x3] %12-15r %16-19r %o
+e28bd000 	add	sp, fp, #0
+   10448:	[Instruction #81] pop  [OPERAND x1] {%12-15r}
+e49db004 	pop	{fp}		@ (ldr fp, [sp], #4)
+   1044c:	[Instruction #82] bx  [OPERAND x1] %0-3r%T
+e12fff1e 	bx	lr
+
+00010450 <factorial>:
+###   [LABEL] factorial (Type: FUNCTION, Address: 0x10450)###
+
+
+   10450:	[Instruction #83] push  [OPERAND x1] %m
+e92d4800 	push	{fp, lr}
+   10454:	[Instruction #84] add  [OPERAND x3] %12-15r %16-19r %o
+e28db004 	add	fp, sp, #4
+   10458:	[Instruction #85] sub  [OPERAND x3] %12-15r %16-19r %o
+e24dd008 	sub	sp, sp, #8
+   1045c:	[Instruction #86] str  [OPERAND x2] %12-15r %a
+e50b0008 	str	r0, [fp, #-8]
+   10460:	[Instruction #87] ldr  [OPERAND x2] %12-15r %a
+e51b3008 	ldr	r3, [fp, #-8]
+   10464:	[Instruction #88] cmp  [OPERAND x2] %16-19r %o%O
+e3530001 	cmp	r3, #1
+   10468:	[Instruction #89] b  [OPERAND x1] %b
+ca000001 	bgt	10474 <factorial+0x24>
+   1046c:	[Instruction #90] mov  [OPERAND x2] %12-15r %o
+e3a03001 	mov	r3, #1
+   10470:	[Instruction #91] b  [OPERAND x1] %b
+ea000006 	b	10490 <factorial+0x40>
+   10474:	[Instruction #92] ldr  [OPERAND x2] %12-15r %a
+e51b3008 	ldr	r3, [fp, #-8]
+   10478:	[Instruction #93] sub  [OPERAND x3] %12-15r %16-19r %o
+e2433001 	sub	r3, r3, #1
+   1047c:	[Instruction #94] mov  [OPERAND x2] %12-15r %0-3r
+e1a00003 	mov	r0, r3
+   10480:	[Instruction #95] b  [OPERAND x1] %b
+ebfffff2 	bl	10450 <factorial>
+   10484:	[Instruction #96] mov  [OPERAND x2] %12-15r %0-3r
+e1a02000 	mov	r2, r0
+   10488:	[Instruction #97] ldr  [OPERAND x2] %12-15r %a
+e51b3008 	ldr	r3, [fp, #-8]
+   1048c:	[Instruction #98] mul  [OPERAND x3] %16-19R %0-3R %8-11R
+e0030392 	mul	r3, r2, r3
+   10490:	[Instruction #99] mov  [OPERAND x2] %12-15r %0-3r
+e1a00003 	mov	r0, r3
+   10494:	[Instruction #100] sub  [OPERAND x3] %12-15r %16-19r %o
+e24bd004 	sub	sp, fp, #4
+   10498:	[Instruction #101] pop  [OPERAND x1] %m
+e8bd8800 	pop	{fp, pc}
+
+0001049c <main>:
+###   [LABEL] main (Type: FUNCTION, Address: 0x1049c)###
+
+
+   1049c:	[Instruction #102] push  [OPERAND x1] %m
+e92d4800 	push	{fp, lr}
+   104a0:	[Instruction #103] add  [OPERAND x3] %12-15r %16-19r %o
+e28db004 	add	fp, sp, #4
+   104a4:	[Instruction #104] sub  [OPERAND x3] %12-15r %16-19r %o
+e24dd010 	sub	sp, sp, #16
+   104a8:	[Instruction #105] mov  [OPERAND x2] %12-15r %o
+e3a0300a 	mov	r3, #10
+   104ac:	[Instruction #106] str  [OPERAND x2] %12-15r %a
+e50b3010 	str	r3, [fp, #-16]
+   104b0:	[Instruction #107] mov  [OPERAND x2] %12-15r %o
+e3a03014 	mov	r3, #20
+   104b4:	[Instruction #108] str  [OPERAND x2] %12-15r %a
+e50b300c 	str	r3, [fp, #-12]
+   104b8:	[Instruction #109] ldr  [OPERAND x2] %12-15r %a
+e51b100c 	ldr	r1, [fp, #-12]
+   104bc:	[Instruction #110] ldr  [OPERAND x2] %12-15r %a
+e51b0010 	ldr	r0, [fp, #-16]
+   104c0:	[Instruction #111] b  [OPERAND x1] %b
+ebffffd6 	bl	10420 <suma>
+   104c4:	[Instruction #112] str  [OPERAND x2] %12-15r %a
+e50b0008 	str	r0, [fp, #-8]
+   104c8:	[Instruction #113] ldr  [OPERAND x2] %12-15r %a
+e51b3008 	ldr	r3, [fp, #-8]
+   104cc:	[Instruction #114] ldr  [OPERAND x2] %12-15r %a
+e51b200c 	ldr	r2, [fp, #-12]
+   104d0:	[Instruction #115] ldr  [OPERAND x2] %12-15r %a
+e51b1010 	ldr	r1, [fp, #-16]
+   104d4:	[Instruction #116] ldr  [OPERAND x2] %12-15r %a
+e59f0028 	ldr	r0, [pc, #40]	@ 10504 <main+0x68>
+   104d8:	[Instruction #117] b  [OPERAND x1] %b
+ebffff89 	bl	10304 <printf@plt>
+   104dc:	[Instruction #118] mov  [OPERAND x2] %12-15r %o
+e3a00005 	mov	r0, #5
+   104e0:	[Instruction #119] b  [OPERAND x1] %b
+ebffffda 	bl	10450 <factorial>
+   104e4:	[Instruction #120] mov  [OPERAND x2] %12-15r %0-3r
+e1a03000 	mov	r3, r0
+   104e8:	[Instruction #121] mov  [OPERAND x2] %12-15r %0-3r
+e1a01003 	mov	r1, r3
+   104ec:	[Instruction #122] ldr  [OPERAND x2] %12-15r %a
+e59f0014 	ldr	r0, [pc, #20]	@ 10508 <main+0x6c>
+   104f0:	[Instruction #123] b  [OPERAND x1] %b
+ebffff83 	bl	10304 <printf@plt>
+   104f4:	[Instruction #124] mov  [OPERAND x2] %12-15r %o
+e3a03000 	mov	r3, #0
+   104f8:	[Instruction #125] mov  [OPERAND x2] %12-15r %0-3r
+e1a00003 	mov	r0, r3
+   104fc:	[Instruction #126] sub  [OPERAND x3] %12-15r %16-19r %o
+e24bd004 	sub	sp, fp, #4
+   10500:	[Instruction #127] pop  [OPERAND x1] %m
+e8bd8800 	pop	{fp, pc}
+   10504:	[BAD] BAD: data not recognized as valid instruction
+000105a8 	.word	0x000105a8
+   10508:	[BAD] BAD: data not recognized as valid instruction
+000105c0 	.word	0x000105c0
+
+Disassembly of section .fini:
+>>> SECTION: .fini (Arch: elf32-littlearm)
+
+
+
+0001050c <_fini>:
+###   [LABEL] _fini (Type: FUNCTION, Address: 0x1050c)###
+
+
+   1050c:	[Instruction #128] push  [OPERAND x1] %m
+e92d4008 	push	{r3, lr}
+   10510:	[Instruction #129] pop  [OPERAND x1] %m
+e8bd8008 	pop	{r3, pc}
+
+[INFO] Instructions written to: disasm_output.txt
+
+╔════════════════════════════════════════════════════════╗
+║               INSTRUCTION STATISTICS                   ║
+║ Architecture: elf32-littlearm                          ║
+╠════════════════════════════════════════════════════════╣
+║ Total files processed:                 0 
+║ Total sections processed:              4 
+║ Total labels processed:                16 
+║ Total instructions:                    129 
+║ Invalid instructions (BAD):            14 
+╚════════════════════════════════════════════════════════╝
+║ Regex pattern dereference (file):      0        
+║ Regex pattern indirect call (file):    0        
+╚════════════════════════════════════════════════════════╝
+
+[INFO] Plugin closed

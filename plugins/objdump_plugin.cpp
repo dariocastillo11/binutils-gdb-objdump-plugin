@@ -1,21 +1,23 @@
 #include <cstdio>
 #include <cstring>
 #include <cctype>
-#include <regex>
 #include <iostream>
 #include <fstream>
 #include <string_view>
-#include "../opcodes/i386_dis_instr_info.h"
-// Always include the generic plugin header first
+#include <re2/re2.h>
 #include "objdump_plugin.h"
-// Then include the architecture-specific header depending on the build target
+// Then include the architecture-specific headers depending on the build target
 #if defined(TARGET_I386) 
+#include "../opcodes/i386_dis_instr_info.h"
 #include "objdump_plugin_i386.h"
 #elif defined(TARGET_X86_64) 
+#include "../opcodes/x86_64_dis_instr_info.h"
 #include "objdump_plugin_x86_64.h"
 #elif defined(TARGET_ARM) 
+#include "../opcodes/arm_dis_instr_info.h"
 #include "objdump_plugin_arm.h"
 #elif defined(TARGET_MIPS) 
+#include "../opcodes/mips_dis_instr_info.h"
 #include "objdump_plugin_mips.h"
 #endif
 
@@ -37,9 +39,9 @@ static unsigned long rex_count = 0;
 static unsigned long pattern_matches = 0;  // DEREFERENCE_PATTERN
 static unsigned long pattern_matches2 = 0;  // INDIRECT_CALL_NO_OFFSET_PATTERN
 
-// Pre-compiled regex patterns
-static std::regex *pattern1 = nullptr;
-static std::regex *pattern2 = nullptr;
+// Pre-compiled RE2 patterns (faster than std::regex)
+static RE2 *pattern1 = nullptr;
+static RE2 *pattern2 = nullptr;
 
 // string for operands. Reserve size.
 static std::string operandString;
@@ -57,28 +59,27 @@ void print_operands(std::string operands);
  void detect_regex_patterns(std::string operands);
 
 // Output file
-static std::ofstream output_file;
+static FILE *output_file = NULL;
 
 /**
  * Initialization function called at plugin load (after dlopen)
  */
 extern "C" void plugin_start(void) {
-    operandString.reserve(100);
+    operandString.reserve(40);
     nmemonicString.reserve(16);
   
-  
-   // Open output file for writing
-   output_file.open("disasm_output.txt");
-   if (!output_file.is_open()) {
-       std::cerr << "Error: Could not open output file\n";
-       return;
-   }
-   try {
-       pattern1 = new std::regex(R"((\*)?("?[&]?[a-zA-Z0-9_-]+"?|0x[0-9a-fA-F]+|-0x[0-9a-fA-F]+)?[\\(\\[][^)\]]+[\\)\]])");
-       pattern2 = new std::regex(R"(^\*(%[a-z0-9]+)$)");
-   } catch (const std::regex_error& e) {
-       std::cerr << "Error: Could not compile regex patterns\n";
-   }
+    // Open output file for writing using C FILE
+    output_file = fopen("disasm_output.txt", "w");
+    if (output_file == NULL) {
+        std::cerr << "Error: Could not open output file\n";
+        return;
+    }
+    try {
+        pattern1 = new RE2(R"((\*)?("?[&]?[a-zA-Z0-9_-]+"?|0x[0-9a-fA-F]+|-0x[0-9a-fA-F]+)?[\(\[][^)\]]+[\)\]])");
+        pattern2 = new RE2(R"(^\*(%[a-z0-9]+)$)");
+    } catch (const std::exception& e) {
+        std::cerr << "Error: Could not compile regex patterns\n";
+    }
 }
 
 /**
@@ -86,11 +87,12 @@ extern "C" void plugin_start(void) {
  */
 extern "C" void plugin_cleanup(void) {
    // Close output file
-   if (output_file.is_open()) {
-       output_file << "\n";  // Final newline
-       output_file.close();
+   if (output_file != NULL) {
+       fprintf(output_file, "\n");
+       fclose(output_file);
+       output_file = NULL;
    }
-   // Clean up regex patterns (delete checks for null automatically)
+   // Clean up regex patterns
    delete pattern1;
    pattern1 = nullptr;
   
@@ -112,12 +114,10 @@ extern "C" void instruction_callback(struct instr_info *ins) {
 
     nmemonicString.clear();
     nmemonicString.assign(ins->mnemonic);
-    nmemonicString.erase(std::remove(nmemonicString.begin(), nmemonicString.end(), ' '), nmemonicString.end());
 
     write_instruction_to_file(ins, operandString);
     count_instruction_types(ins);
     
-    // C++ style console output (ported from v2 optimization ideas)
     print_instruction_console(ins);
     analyze_prefixes(ins);
     
@@ -169,11 +169,12 @@ extern "C" void label_plugin_callback(const char *label_name, const char *symbol
  */
 extern "C" void plugin_print_stats(void) {
     // Close file and add final newline if open
-    if (output_file.is_open()) {
-        output_file << "\n";
-        output_file.close();
+    if (output_file != NULL) {
+        fprintf(output_file, "\n");
+        fclose(output_file);
+        output_file = NULL;
     }
-    std::cout << "\n[INFO] Instructions written to: disasm_output.txt\n\n";
+    std::cerr << "\n[INFO] Instructions written to: disasm_output.txt\n\n";
   
     std::cout << "╔════════════════════════════════════════════════════════╗\n";
     std::cout << "║               INSTRUCTION STATISTICS                   ║\n";
@@ -210,15 +211,15 @@ extern "C" void plugin_print_stats(void) {
 * Write the instruction to the output file in the format: address::mnemonic,operands|
 */
 void write_instruction_to_file(const struct instr_info *ins, const std::string& operandString) {
-   // Standard C++ file stream writing (addresses Andres's request)
-   output_file << std::hex << ins->start_pc << "::" << ins->mnemonic << ",";
+   // Use C FILE I/O for speed (faster than C++ streams)
+   fprintf(output_file, "%lx::%s,", ins->start_pc, ins->mnemonic);
   
    if (!operandString.empty()) {
-       output_file << operandString << ",";
+       fprintf(output_file, "%s,", operandString.c_str());
    } else {
-       output_file << ",";
+       fprintf(output_file, ",");
    }
-   output_file << "|";
+   fprintf(output_file, "|");
 }
 
 /**
@@ -312,14 +313,26 @@ void analyze_prefixes(const struct instr_info *ins) {
 
 
 
-// Analiza regex desde el desensamblado (por defecto)
+// Analiza regex desde el desensamblado (optimizado con pre-filtrado)
 void detect_regex_patterns(std::string operands) {
     #if defined(TARGET_I386) || defined(TARGET_x86_64)
     if (operands.empty() || !pattern1 || !pattern2)
         return;
-    if (std::regex_search(operands, *pattern1))
-        ++pattern_matches;
-    if (std::regex_search(operands, *pattern2))
-        ++pattern_matches2;
+    
+    const bool has_star  = operands.find('*') != std::string::npos;
+    const bool has_paren = operands.find('(') != std::string::npos ||
+                           operands.find('[') != std::string::npos;
+
+    // pattern1: dereference / memory
+    if (has_star || has_paren) {
+        if (RE2::PartialMatch(operands, *pattern1))
+            ++pattern_matches;
+    }
+
+    // pattern2: indirect call (*%reg)
+    if (has_star) {
+        if (RE2::PartialMatch(operands, *pattern2))
+            ++pattern_matches2;
+    }
     #endif
 }

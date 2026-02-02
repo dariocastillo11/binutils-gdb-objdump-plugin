@@ -3,17 +3,22 @@
 #include <ctype.h>
 #include <iostream>
 #include <re2/re2.h>
-#include "../opcodes/i386_dis_instr_info.h"
 #include "objdump_plugin.h"
 #if defined(TARGET_I386)
+#include "../opcodes/i386_dis_instr_info.h"
 #include "objdump_plugin_i386.h"
 #elif defined(TARGET_X86_64)
+#include "../opcodes/x86_64_dis_instr_info.h"
 #include "objdump_plugin_x86_64.h"
 #elif defined(TARGET_ARM)
+#include "../opcodes/arm_dis_instr_info.h"
 #include "objdump_plugin_arm.h"
+#elif defined(TARGET_MIPS)
+#include "../opcodes/mips_dis_instr_info.h"
+#include "objdump_plugin_mips.h"
 #endif
-static unsigned long pattern_matches = 0;  // DEREFERENCE_PATTERN
-static unsigned long pattern_matches2 = 0;  // INDIRECT_CALL_NO_OFFSET_PATTERN
+static uint64_t pattern_matches = 0;  // DEREFERENCE_PATTERN
+static uint64_t pattern_matches2 = 0;  // INDIRECT_CALL_NO_OFFSET_PATTERN
 
 static RE2* pattern1 = nullptr;
 static RE2* pattern2 = nullptr;
@@ -33,7 +38,7 @@ void detect_regex_patterns(const std::string& operands);
 extern "C" void plugin_start(void) {
     operandString.reserve(40);
     nmemonicString.reserve(16);
-    output_file = fopen("disasm_output.txt", "w");
+    output_file = fopen("../tests/PPDA/disasm_output.txt", "w");
     if (output_file == NULL) {
         std::cerr << "Error: Could not open output file\n";
         return;
@@ -86,17 +91,39 @@ void write_instruction_to_file(const struct instr_info *ins, const std::string& 
         } else {
             fprintf(output_file, ",");
         }
-        fprintf(output_file, "|\n");
+        fprintf(output_file, "|");
     }
 }
 
-void detect_regex_patterns(const std::string& operands) {
+/**void detect_regex_patterns(const std::string& operands) {
     if (operands.empty() || pattern1 == nullptr || pattern2 == nullptr) return;
-    try {
-        if (RE2::PartialMatch(operands, *pattern1)) pattern_matches++;
-        if (RE2::PartialMatch(operands, *pattern2)) pattern_matches2++;
-    } catch (const std::exception& e) {
-        std::cerr << "Regex error: " << e.what() << '\n';
+    if (operands.find('(') == std::string::npos &&
+    operands.find('[') == std::string::npos &&
+    operands.find('*') == std::string::npos) {
+    return;
+    }
+    if (RE2::PartialMatch(operands, *pattern1)) pattern_matches++;
+    if (RE2::PartialMatch(operands, *pattern2)) pattern_matches2++;
+   
+}
+    */
+void detect_regex_patterns(const std::string& operands) {
+    if (operands.empty() || !pattern1 || !pattern2) return;
+
+    const bool has_star  = operands.find('*') != std::string::npos;
+    const bool has_paren = operands.find('(') != std::string::npos ||
+                           operands.find('[') != std::string::npos;
+
+    // pattern1: dereference / memory
+    if (has_star || has_paren) {
+        if (RE2::PartialMatch(operands, *pattern1))
+            pattern_matches++;
+    }
+
+    // pattern2: indirect call (*%reg)
+    if (has_star) {
+        if (RE2::PartialMatch(operands, *pattern2))
+            pattern_matches2++;
     }
 }
 
@@ -105,7 +132,7 @@ extern "C" void plugin_print_stats(void) {
         fprintf(output_file, "\n");
         fclose(output_file);
         output_file = NULL;
-        fprintf(stdout, "[INFO] Instructions written to: disasm_output.txt\n");
+        fprintf(stdout, "[INFO] Instructions written to: ../tests/PPDA/disasm_output.txt\n");
     }
     std::string stats =
         "\n[INFO] Instructions written to: disasm_output.txt\n\n"
@@ -117,7 +144,6 @@ extern "C" void plugin_print_stats(void) {
     stats += "║ Regex pattern dereference (file):      " + std::to_string(pattern_matches) + "        \n";
     stats += "║ Regex pattern indirect call (file):    " + std::to_string(pattern_matches2) + "        \n";
     stats += "╚════════════════════════════════════════════════════════╝\n\n";
-    std::cout << stats;
     std::cerr << stats;
 
     

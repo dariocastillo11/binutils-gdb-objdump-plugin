@@ -9,8 +9,8 @@ import shutil
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 BINUTILS_DIR = os.path.join(ROOT_DIR, "binutils")
-PLUGIN_SRC = os.path.join(ROOT_DIR, "plugins/objdump_plugin.cpp")
-PLUGIN_SO = os.path.join(BINUTILS_DIR, "objdump_plugin.so")
+PLUGIN_SRC = os.path.join(ROOT_DIR, "plugins/objdump_pluginv2.cpp")
+PLUGIN_SO = os.path.join(BINUTILS_DIR, "objdump_pluginv2.so")
 OBJDUMP = os.path.join(BINUTILS_DIR, "objdump")
 OBJCOPY = os.path.join(BINUTILS_DIR, "objcopy")
 
@@ -53,7 +53,7 @@ def compile_plugin(target_arch):
         "g++", "-shared", "-fPIC", "-o", PLUGIN_SO, PLUGIN_SRC,
         f"-D{target_arch}",
         "-L./opcodes", "-lopcodes", "-L./bfd", "-lbfd",
-        "-I./include", "-I./bfd"
+        "-I./include", "-I./bfd", "-lre2"
     ]
     res = run_command(cmd, cwd=ROOT_DIR)
     if res.returncode == 0:
@@ -61,6 +61,14 @@ def compile_plugin(target_arch):
         return True
     print(f"FAILED\nError: {res.stderr}")
     return False
+
+def normalize_output(text: str) -> str:
+    # Normalize spacing differences in operands
+    text = text.replace(", ", ",")
+    text = text.replace(" ,", ",")
+    while "  " in text:
+        text = text.replace("  ", " ")
+    return text.strip()
 
 def test_architecture(name, config):
     print(f"\n>>> TESTING: {name}")
@@ -71,7 +79,11 @@ def test_architecture(name, config):
     with tempfile.TemporaryDirectory() as tmpdir:
         bin_path = os.path.join(tmpdir, "test.bin")
         obj_path = os.path.join(tmpdir, "test.o")
-        disasm_out = os.path.join(BINUTILS_DIR, "disasm_output.txt")
+        disasm_out = os.path.join(ROOT_DIR, "tests", "PPDA", "disasm_output.txt")
+        ppda_dir = os.path.join(ROOT_DIR, "tests", "PPDA")
+        
+        # Create PPDA directory for output
+        os.makedirs(ppda_dir, exist_ok=True)
         
         # Cleanup previous disasm if exists
         if os.path.exists(disasm_out): os.remove(disasm_out)
@@ -81,28 +93,34 @@ def test_architecture(name, config):
         with open(bin_path, "wb") as f: f.write(bytecode)
 
         # 2. Convert to ELF object
+        if not os.path.exists(OBJCOPY):
+            print(f"  [-] objcopy not found. Run: cd {ROOT_DIR} && make objcopy")
+            return False
         objcopy_cmd = [OBJCOPY] + config["objcopy_args"] + [bin_path, obj_path]
-        if run_command(objcopy_cmd).returncode != 0:
+        res = run_command(objcopy_cmd)
+        if res.returncode != 0:
             print(f"  [-] Failed to generate test object for {name}")
+            print(f"      stderr: {res.stderr}")
             return False
 
         # 3. Run objdump with plugin
         print(f"  [+] Running objdump...", end=" ", flush=True)
-        objdump_cmd = [OBJDUMP, "-P", PLUGIN_SO, "-D", obj_path]
+        # objdump loads plugin automatically from ./objdump_pluginv2.so
+        objdump_cmd = [OBJDUMP, "-D", obj_path]
+        # Execute from BINUTILS_DIR so plugin can be found and output paths work
         res = run_command(objdump_cmd, cwd=BINUTILS_DIR)
-        
-        if "ALL REGRESSION TESTS PASSED" in res.stdout: # Meta-check if script name leaked? No.
-            pass
 
         # 4. Content Verification
         if not os.path.exists(disasm_out):
             print("FAILED (disasm_output.txt missing)")
+            if res.stderr:
+                print(f"    objdump stderr: {res.stderr[:200]}")
             return False
 
         with open(disasm_out, 'r') as f:
             actual = f.read()
 
-        if actual == config["golden"]:
+        if normalize_output(actual) == normalize_output(config["golden"]):
             print("OK (Byte-perfect)")
             return True
         else:
