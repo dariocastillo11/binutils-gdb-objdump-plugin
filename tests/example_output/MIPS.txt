@@ -1,0 +1,484 @@
+[INFO] Plugin loaded successfully
+
+/home/dario.castillo/Desktop/binarios/arquitecturas/programa_mips:     file format elf32-bigmips
+
+
+Disassembly of section .init:
+>>> SECTION: .init (Arch: elf32-bigmips)
+
+
+
+004004e4 <_init>:
+###   [LABEL] _init (Type: FUNCTION, Address: 0x4004e4)###
+
+
+  4004e4:	[Instruction #1] lui  [OPERAND x2] t u
+3c1c0002 	lui	gp,0x2
+  4004e8:	[Instruction #2] addiu  [OPERAND x3] t r j
+279c7b2c 	addiu	gp,gp,31532
+  4004ec:	[Instruction #3] addu  [OPERAND x3] d v t
+0399e021 	addu	gp,gp,t9
+  4004f0:	[Instruction #4] addiu  [OPERAND x3] t r j
+27bdffe0 	addiu	sp,sp,-32
+  4004f4:	[Instruction #5] sw  [OPERAND x2] t o(b)
+afbc0010 	sw	gp,16(sp)
+  4004f8:	[Instruction #6] sw  [OPERAND x2] t o(b)
+afbf001c 	sw	ra,28(sp)
+  4004fc:	[Instruction #7] lw  [OPERAND x2] t o(b)
+8f828020 	lw	v0,-32736(gp)
+  400500:	[Instruction #8] beqz  [OPERAND x2] s p
+10400004 	beqz	v0,400514 <_init+0x30>
+  400504:	[Instruction #9] nop 
+00000000 	nop
+  400508:	[Instruction #10] lw  [OPERAND x2] t o(b)
+8f998020 	lw	t9,-32736(gp)
+  40050c:	[Instruction #11] jalr  [OPERAND x1] s
+0320f809 	jalr	t9
+  400510:	[Instruction #12] nop 
+00000000 	nop
+  400514:	[Instruction #13] lw  [OPERAND x2] t o(b)
+8fbf001c 	lw	ra,28(sp)
+  400518:	[Instruction #14] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  40051c:	[Instruction #15] addiu  [OPERAND x3] t r j
+27bd0020 	addiu	sp,sp,32
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-bigmips)
+
+
+
+00400520 <__start>:
+###   [LABEL] __start (Type: FUNCTION, Address: 0x400520)###
+
+
+  400520:	[Instruction #16] move  [OPERAND x2] d s
+03e00025 	move	zero,ra
+  400524:	[Instruction #17] bal  [OPERAND x1] p
+04110001 	bal	40052c <__start+0xc>
+  400528:	[Instruction #18] nop 
+00000000 	nop
+  40052c:	[Instruction #19] lui  [OPERAND x2] t u
+3c1c0002 	lui	gp,0x2
+  400530:	[Instruction #20] addiu  [OPERAND x3] t r j
+279c7ae4 	addiu	gp,gp,31460
+  400534:	[Instruction #21] addu  [OPERAND x3] d v t
+039fe021 	addu	gp,gp,ra
+  400538:	[Instruction #22] move  [OPERAND x2] d s
+0000f825 	move	ra,zero
+  40053c:	[Instruction #23] lw  [OPERAND x2] t o(b)
+8f848018 	lw	a0,-32744(gp)
+  400540:	[Instruction #24] lw  [OPERAND x2] t o(b)
+8fa50000 	lw	a1,0(sp)
+  400544:	[Instruction #25] addiu  [OPERAND x3] t r j
+27a60004 	addiu	a2,sp,4
+  400548:	[Instruction #26] li  [OPERAND x2] t j
+2401fff8 	li	at,-8
+  40054c:	[Instruction #27] and  [OPERAND x3] d v t
+03a1e824 	and	sp,sp,at
+  400550:	[Instruction #28] addiu  [OPERAND x3] t r j
+27bdffe0 	addiu	sp,sp,-32
+  400554:	[Instruction #29] move  [OPERAND x2] d s
+00003825 	move	a3,zero
+  400558:	[Instruction #30] sw  [OPERAND x2] t o(b)
+afa00010 	sw	zero,16(sp)
+  40055c:	[Instruction #31] sw  [OPERAND x2] t o(b)
+afa20014 	sw	v0,20(sp)
+  400560:	[Instruction #32] sw  [OPERAND x2] t o(b)
+afbd0018 	sw	sp,24(sp)
+  400564:	[Instruction #33] lw  [OPERAND x2] t o(b)
+8f99802c 	lw	t9,-32724(gp)
+  400568:	[Instruction #34] jalr  [OPERAND x1] s
+0320f809 	jalr	t9
+  40056c:	[Instruction #35] nop 
+00000000 	nop
+
+00400570 <hlt>:
+###   [LABEL] hlt (Type: UNKNOWN, Address: 0x400570)###
+
+
+  400570:	[Instruction #36] b  [OPERAND x1] p
+1000ffff 	b	400570 <hlt>
+  400574:	[Instruction #37] nop 
+00000000 	nop
+	...
+
+00400580 <deregister_tm_clones>:
+###   [LABEL] deregister_tm_clones (Type: FUNCTION, Address: 0x400580)###
+
+
+  400580:	[Instruction #38] lui  [OPERAND x2] t u
+3c040042 	lui	a0,0x42
+  400584:	[Instruction #39] lui  [OPERAND x2] t u
+3c020042 	lui	v0,0x42
+  400588:	[Instruction #40] addiu  [OPERAND x3] t r j
+24840014 	addiu	a0,a0,20
+  40058c:	[Instruction #41] addiu  [OPERAND x3] t r j
+24420014 	addiu	v0,v0,20
+  400590:	[Instruction #42] beq  [OPERAND x3] s t p
+10440007 	beq	v0,a0,4005b0 <deregister_tm_clones+0x30>
+  400594:	[Instruction #43] lui  [OPERAND x2] t u
+3c1c0043 	lui	gp,0x43
+  400598:	[Instruction #44] addiu  [OPERAND x3] t r j
+279c8010 	addiu	gp,gp,-32752
+  40059c:	[Instruction #45] lw  [OPERAND x2] t o(b)
+8f998028 	lw	t9,-32728(gp)
+  4005a0:	[Instruction #46] beqz  [OPERAND x2] s p
+13200003 	beqz	t9,4005b0 <deregister_tm_clones+0x30>
+  4005a4:	[Instruction #47] nop 
+00000000 	nop
+  4005a8:	[Instruction #48] jr  [OPERAND x1] s
+03200008 	jr	t9
+  4005ac:	[Instruction #49] nop 
+00000000 	nop
+  4005b0:	[Instruction #50] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  4005b4:	[Instruction #51] nop 
+00000000 	nop
+
+004005b8 <register_tm_clones>:
+###   [LABEL] register_tm_clones (Type: FUNCTION, Address: 0x4005b8)###
+
+
+  4005b8:	[Instruction #52] lui  [OPERAND x2] t u
+3c040042 	lui	a0,0x42
+  4005bc:	[Instruction #53] lui  [OPERAND x2] t u
+3c020042 	lui	v0,0x42
+  4005c0:	[Instruction #54] addiu  [OPERAND x3] t r j
+24840014 	addiu	a0,a0,20
+  4005c4:	[Instruction #55] addiu  [OPERAND x3] t r j
+24450014 	addiu	a1,v0,20
+  4005c8:	[Instruction #56] subu  [OPERAND x3] d v t
+00a42823 	subu	a1,a1,a0
+  4005cc:	[Instruction #57] sra  [OPERAND x3] d w <
+00051083 	sra	v0,a1,0x2
+  4005d0:	[Instruction #58] srl  [OPERAND x3] d w <
+00052fc2 	srl	a1,a1,0x1f
+  4005d4:	[Instruction #59] addu  [OPERAND x3] d v t
+00a22821 	addu	a1,a1,v0
+  4005d8:	[Instruction #60] sra  [OPERAND x3] d w <
+00052843 	sra	a1,a1,0x1
+  4005dc:	[Instruction #61] beqz  [OPERAND x2] s p
+10a00007 	beqz	a1,4005fc <register_tm_clones+0x44>
+  4005e0:	[Instruction #62] lui  [OPERAND x2] t u
+3c1c0043 	lui	gp,0x43
+  4005e4:	[Instruction #63] addiu  [OPERAND x3] t r j
+279c8010 	addiu	gp,gp,-32752
+  4005e8:	[Instruction #64] lw  [OPERAND x2] t o(b)
+8f99801c 	lw	t9,-32740(gp)
+  4005ec:	[Instruction #65] beqz  [OPERAND x2] s p
+13200003 	beqz	t9,4005fc <register_tm_clones+0x44>
+  4005f0:	[Instruction #66] nop 
+00000000 	nop
+  4005f4:	[Instruction #67] jr  [OPERAND x1] s
+03200008 	jr	t9
+  4005f8:	[Instruction #68] nop 
+00000000 	nop
+  4005fc:	[Instruction #69] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  400600:	[Instruction #70] nop 
+00000000 	nop
+
+00400604 <__do_global_dtors_aux>:
+###   [LABEL] __do_global_dtors_aux (Type: FUNCTION, Address: 0x400604)###
+
+
+  400604:	[Instruction #71] addiu  [OPERAND x3] t r j
+27bdffe0 	addiu	sp,sp,-32
+  400608:	[Instruction #72] sw  [OPERAND x2] t o(b)
+afb00018 	sw	s0,24(sp)
+  40060c:	[Instruction #73] lui  [OPERAND x2] t u
+3c100042 	lui	s0,0x42
+  400610:	[Instruction #74] sw  [OPERAND x2] t o(b)
+afbf001c 	sw	ra,28(sp)
+  400614:	[Instruction #75] lbu  [OPERAND x2] t o(b)
+92020050 	lbu	v0,80(s0)
+  400618:	[Instruction #76] bnez  [OPERAND x2] s p
+14400006 	bnez	v0,400634 <__do_global_dtors_aux+0x30>
+  40061c:	[Instruction #77] lw  [OPERAND x2] t o(b)
+8fbf001c 	lw	ra,28(sp)
+  400620:	[Instruction #78] jal  [OPERAND x1] a
+0c100160 	jal	400580 <deregister_tm_clones>
+  400624:	[Instruction #79] nop 
+00000000 	nop
+  400628:	[Instruction #80] li  [OPERAND x2] t j
+24020001 	li	v0,1
+  40062c:	[Instruction #81] sb  [OPERAND x2] t o(b)
+a2020050 	sb	v0,80(s0)
+  400630:	[Instruction #82] lw  [OPERAND x2] t o(b)
+8fbf001c 	lw	ra,28(sp)
+  400634:	[Instruction #83] lw  [OPERAND x2] t o(b)
+8fb00018 	lw	s0,24(sp)
+  400638:	[Instruction #84] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  40063c:	[Instruction #85] addiu  [OPERAND x3] t r j
+27bd0020 	addiu	sp,sp,32
+
+00400640 <frame_dummy>:
+###   [LABEL] frame_dummy (Type: FUNCTION, Address: 0x400640)###
+
+
+  400640:	[Instruction #86] j  [OPERAND x1] a
+0810016e 	j	4005b8 <register_tm_clones>
+  400644:	[Instruction #87] nop 
+00000000 	nop
+	...
+
+00400650 <suma>:
+###   [LABEL] suma (Type: FUNCTION, Address: 0x400650)###
+
+
+  400650:	[Instruction #88] addiu  [OPERAND x3] t r j
+27bdfff8 	addiu	sp,sp,-8
+  400654:	[Instruction #89] sw  [OPERAND x2] t o(b)
+afbe0004 	sw	s8,4(sp)
+  400658:	[Instruction #90] move  [OPERAND x2] d s
+03a0f025 	move	s8,sp
+  40065c:	[Instruction #91] sw  [OPERAND x2] t o(b)
+afc40008 	sw	a0,8(s8)
+  400660:	[Instruction #92] sw  [OPERAND x2] t o(b)
+afc5000c 	sw	a1,12(s8)
+  400664:	[Instruction #93] lw  [OPERAND x2] t o(b)
+8fc30008 	lw	v1,8(s8)
+  400668:	[Instruction #94] lw  [OPERAND x2] t o(b)
+8fc2000c 	lw	v0,12(s8)
+  40066c:	[Instruction #95] addu  [OPERAND x3] d v t
+00621021 	addu	v0,v1,v0
+  400670:	[Instruction #96] move  [OPERAND x2] d s
+03c0e825 	move	sp,s8
+  400674:	[Instruction #97] lw  [OPERAND x2] t o(b)
+8fbe0004 	lw	s8,4(sp)
+  400678:	[Instruction #98] addiu  [OPERAND x3] t r j
+27bd0008 	addiu	sp,sp,8
+  40067c:	[Instruction #99] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  400680:	[Instruction #100] nop 
+00000000 	nop
+
+00400684 <factorial>:
+###   [LABEL] factorial (Type: FUNCTION, Address: 0x400684)###
+
+
+  400684:	[Instruction #101] addiu  [OPERAND x3] t r j
+27bdffe0 	addiu	sp,sp,-32
+  400688:	[Instruction #102] sw  [OPERAND x2] t o(b)
+afbf001c 	sw	ra,28(sp)
+  40068c:	[Instruction #103] sw  [OPERAND x2] t o(b)
+afbe0018 	sw	s8,24(sp)
+  400690:	[Instruction #104] move  [OPERAND x2] d s
+03a0f025 	move	s8,sp
+  400694:	[Instruction #105] sw  [OPERAND x2] t o(b)
+afc40020 	sw	a0,32(s8)
+  400698:	[Instruction #106] lw  [OPERAND x2] t o(b)
+8fc20020 	lw	v0,32(s8)
+  40069c:	[Instruction #107] slti  [OPERAND x3] t r j
+28420002 	slti	v0,v0,2
+  4006a0:	[Instruction #108] beqz  [OPERAND x2] s p
+10400004 	beqz	v0,4006b4 <factorial+0x30>
+  4006a4:	[Instruction #109] nop 
+00000000 	nop
+  4006a8:	[Instruction #110] li  [OPERAND x2] t j
+24020001 	li	v0,1
+  4006ac:	[Instruction #111] b  [OPERAND x1] p
+10000009 	b	4006d4 <factorial+0x50>
+  4006b0:	[Instruction #112] nop 
+00000000 	nop
+  4006b4:	[Instruction #113] lw  [OPERAND x2] t o(b)
+8fc20020 	lw	v0,32(s8)
+  4006b8:	[Instruction #114] addiu  [OPERAND x3] t r j
+2442ffff 	addiu	v0,v0,-1
+  4006bc:	[Instruction #115] move  [OPERAND x2] d s
+00402025 	move	a0,v0
+  4006c0:	[Instruction #116] jal  [OPERAND x1] a
+0c1001a1 	jal	400684 <factorial>
+  4006c4:	[Instruction #117] nop 
+00000000 	nop
+  4006c8:	[Instruction #118] move  [OPERAND x2] d s
+00401825 	move	v1,v0
+  4006cc:	[Instruction #119] lw  [OPERAND x2] t o(b)
+8fc20020 	lw	v0,32(s8)
+  4006d0:	[Instruction #120] mul  [OPERAND x3] d v t
+70621002 	mul	v0,v1,v0
+  4006d4:	[Instruction #121] move  [OPERAND x2] d s
+03c0e825 	move	sp,s8
+  4006d8:	[Instruction #122] lw  [OPERAND x2] t o(b)
+8fbf001c 	lw	ra,28(sp)
+  4006dc:	[Instruction #123] lw  [OPERAND x2] t o(b)
+8fbe0018 	lw	s8,24(sp)
+  4006e0:	[Instruction #124] addiu  [OPERAND x3] t r j
+27bd0020 	addiu	sp,sp,32
+  4006e4:	[Instruction #125] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  4006e8:	[Instruction #126] nop 
+00000000 	nop
+
+004006ec <main>:
+###   [LABEL] main (Type: FUNCTION, Address: 0x4006ec)###
+
+
+  4006ec:	[Instruction #127] addiu  [OPERAND x3] t r j
+27bdffd0 	addiu	sp,sp,-48
+  4006f0:	[Instruction #128] sw  [OPERAND x2] t o(b)
+afbf002c 	sw	ra,44(sp)
+  4006f4:	[Instruction #129] sw  [OPERAND x2] t o(b)
+afbe0028 	sw	s8,40(sp)
+  4006f8:	[Instruction #130] move  [OPERAND x2] d s
+03a0f025 	move	s8,sp
+  4006fc:	[Instruction #131] lui  [OPERAND x2] t u
+3c1c0043 	lui	gp,0x43
+  400700:	[Instruction #132] addiu  [OPERAND x3] t r j
+279c8010 	addiu	gp,gp,-32752
+  400704:	[Instruction #133] sw  [OPERAND x2] t o(b)
+afbc0010 	sw	gp,16(sp)
+  400708:	[Instruction #134] li  [OPERAND x2] t j
+2402000a 	li	v0,10
+  40070c:	[Instruction #135] sw  [OPERAND x2] t o(b)
+afc2001c 	sw	v0,28(s8)
+  400710:	[Instruction #136] li  [OPERAND x2] t j
+24020014 	li	v0,20
+  400714:	[Instruction #137] sw  [OPERAND x2] t o(b)
+afc20020 	sw	v0,32(s8)
+  400718:	[Instruction #138] lw  [OPERAND x2] t o(b)
+8fc50020 	lw	a1,32(s8)
+  40071c:	[Instruction #139] lw  [OPERAND x2] t o(b)
+8fc4001c 	lw	a0,28(s8)
+  400720:	[Instruction #140] jal  [OPERAND x1] a
+0c100194 	jal	400650 <suma>
+  400724:	[Instruction #141] nop 
+00000000 	nop
+  400728:	[Instruction #142] lw  [OPERAND x2] t o(b)
+8fdc0010 	lw	gp,16(s8)
+  40072c:	[Instruction #143] sw  [OPERAND x2] t o(b)
+afc20024 	sw	v0,36(s8)
+  400730:	[Instruction #144] lw  [OPERAND x2] t o(b)
+8fc70024 	lw	a3,36(s8)
+  400734:	[Instruction #145] lw  [OPERAND x2] t o(b)
+8fc60020 	lw	a2,32(s8)
+  400738:	[Instruction #146] lw  [OPERAND x2] t o(b)
+8fc5001c 	lw	a1,28(s8)
+  40073c:	[Instruction #147] lui  [OPERAND x2] t u
+3c020040 	lui	v0,0x40
+  400740:	[Instruction #148] addiu  [OPERAND x3] t r j
+24440820 	addiu	a0,v0,2080
+  400744:	[Instruction #149] lw  [OPERAND x2] t o(b)
+8f828024 	lw	v0,-32732(gp)
+  400748:	[Instruction #150] move  [OPERAND x2] d s
+0040c825 	move	t9,v0
+  40074c:	[Instruction #151] jalr  [OPERAND x1] s
+0320f809 	jalr	t9
+  400750:	[Instruction #152] nop 
+00000000 	nop
+  400754:	[Instruction #153] lw  [OPERAND x2] t o(b)
+8fdc0010 	lw	gp,16(s8)
+  400758:	[Instruction #154] li  [OPERAND x2] t j
+24040005 	li	a0,5
+  40075c:	[Instruction #155] jal  [OPERAND x1] a
+0c1001a1 	jal	400684 <factorial>
+  400760:	[Instruction #156] nop 
+00000000 	nop
+  400764:	[Instruction #157] lw  [OPERAND x2] t o(b)
+8fdc0010 	lw	gp,16(s8)
+  400768:	[Instruction #158] move  [OPERAND x2] d s
+00402825 	move	a1,v0
+  40076c:	[Instruction #159] lui  [OPERAND x2] t u
+3c020040 	lui	v0,0x40
+  400770:	[Instruction #160] addiu  [OPERAND x3] t r j
+24440838 	addiu	a0,v0,2104
+  400774:	[Instruction #161] lw  [OPERAND x2] t o(b)
+8f828024 	lw	v0,-32732(gp)
+  400778:	[Instruction #162] move  [OPERAND x2] d s
+0040c825 	move	t9,v0
+  40077c:	[Instruction #163] jalr  [OPERAND x1] s
+0320f809 	jalr	t9
+  400780:	[Instruction #164] nop 
+00000000 	nop
+  400784:	[Instruction #165] lw  [OPERAND x2] t o(b)
+8fdc0010 	lw	gp,16(s8)
+  400788:	[Instruction #166] move  [OPERAND x2] d s
+00001025 	move	v0,zero
+  40078c:	[Instruction #167] move  [OPERAND x2] d s
+03c0e825 	move	sp,s8
+  400790:	[Instruction #168] lw  [OPERAND x2] t o(b)
+8fbf002c 	lw	ra,44(sp)
+  400794:	[Instruction #169] lw  [OPERAND x2] t o(b)
+8fbe0028 	lw	s8,40(sp)
+  400798:	[Instruction #170] addiu  [OPERAND x3] t r j
+27bd0030 	addiu	sp,sp,48
+  40079c:	[Instruction #171] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  4007a0:	[Instruction #172] nop 
+00000000 	nop
+	...
+
+Disassembly of section .MIPS.stubs:
+>>> SECTION: .MIPS.stubs (Arch: elf32-bigmips)
+
+
+
+004007b0 <_MIPS_STUBS_>:
+###   [LABEL] _MIPS_STUBS_ (Type: FUNCTION, Address: 0x4007b0)###
+
+
+  4007b0:	[Instruction #173] lw  [OPERAND x2] t o(b)
+8f998010 	lw	t9,-32752(gp)
+  4007b4:	[Instruction #174] move  [OPERAND x2] d s
+03e07825 	move	t7,ra
+  4007b8:	[Instruction #175] jalr  [OPERAND x1] s
+0320f809 	jalr	t9
+  4007bc:	[Instruction #176] li  [OPERAND x2] t j
+24180009 	li	t8,9
+  4007c0:	[Instruction #177] lw  [OPERAND x2] t o(b)
+8f998010 	lw	t9,-32752(gp)
+  4007c4:	[Instruction #178] move  [OPERAND x2] d s
+03e07825 	move	t7,ra
+  4007c8:	[Instruction #179] jalr  [OPERAND x1] s
+0320f809 	jalr	t9
+  4007cc:	[Instruction #180] li  [OPERAND x2] t j
+24180007 	li	t8,7
+	...
+
+Disassembly of section .fini:
+>>> SECTION: .fini (Arch: elf32-bigmips)
+
+
+
+004007e0 <_fini>:
+###   [LABEL] _fini (Type: FUNCTION, Address: 0x4007e0)###
+
+
+  4007e0:	[Instruction #181] lui  [OPERAND x2] t u
+3c1c0002 	lui	gp,0x2
+  4007e4:	[Instruction #182] addiu  [OPERAND x3] t r j
+279c7830 	addiu	gp,gp,30768
+  4007e8:	[Instruction #183] addu  [OPERAND x3] d v t
+0399e021 	addu	gp,gp,t9
+  4007ec:	[Instruction #184] addiu  [OPERAND x3] t r j
+27bdffe0 	addiu	sp,sp,-32
+  4007f0:	[Instruction #185] sw  [OPERAND x2] t o(b)
+afbc0010 	sw	gp,16(sp)
+  4007f4:	[Instruction #186] sw  [OPERAND x2] t o(b)
+afbf001c 	sw	ra,28(sp)
+  4007f8:	[Instruction #187] lw  [OPERAND x2] t o(b)
+8fbf001c 	lw	ra,28(sp)
+  4007fc:	[Instruction #188] jr  [OPERAND x1] s
+03e00008 	jr	ra
+  400800:	[Instruction #189] addiu  [OPERAND x3] t r j
+27bd0020 	addiu	sp,sp,32
+
+[INFO] Instructions written to: disasm_output.txt
+
+╔════════════════════════════════════════════════════════╗
+║               INSTRUCTION STATISTICS                   ║
+║ Architecture: elf32-bigmips                            ║
+╠════════════════════════════════════════════════════════╣
+║ Total files processed:                 0 
+║ Total sections processed:              4 
+║ Total labels processed:                12 
+║ Total instructions:                    189 
+║ Invalid instructions (BAD):            0 
+╚════════════════════════════════════════════════════════╝
+║ Regex pattern dereference (file):      0        
+║ Regex pattern indirect call (file):    0        
+╚════════════════════════════════════════════════════════╝
+
+[INFO] Plugin closed

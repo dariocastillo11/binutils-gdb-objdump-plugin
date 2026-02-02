@@ -28,6 +28,10 @@
 #include "elf/mips.h"
 #include "elfxx-mips.h"
 
+#include "../plugins/objdump_plugin_mips.h"
+extern void instruccion_hook(void *ins) __attribute__((weak));
+extern void bad_instruccion_hook(const char *bad_reason) __attribute__((weak));
+
 /* FIXME: These are needed to figure out if the code is mips16 or
    not. The low bit of the address is often a good indicator.  No
    symbol table is available when this code runs out in an embedded
@@ -2117,6 +2121,22 @@ print_insn_mips (bfd_vma memaddr,
 				   memaddr, 4);
 		}
 
+
+	      /* --- Hook for Plugin MIPS --- */
+	      struct instr_info ins_mips;
+	      ins_mips.start_pc = memaddr;
+	      snprintf(ins_mips.mnemonic, sizeof(ins_mips.mnemonic), "%s", op->name);
+	      ins_mips.operands[0] = '\0';
+	      if (op->args[0]) {
+		const char *args_p = op->args;
+		int oj = 0;
+		while (*args_p && oj < 255) {
+		  ins_mips.operands[oj++] = *args_p++;
+		}
+		ins_mips.operands[oj] = '\0';
+	      }
+	      if (instruccion_hook) instruccion_hook((void *)&ins_mips);
+
 	      return INSNLEN;
 	    }
 	}
@@ -2506,6 +2526,22 @@ print_insn_mips16 (bfd_vma memaddr, struct disassemble_info *info)
 	  else if ((op->pinfo2 & INSN2_COND_BRANCH) != 0)
 	    info->insn_type = dis_condbranch;
 
+
+	  /* --- Hook for Plugin MIPS16 --- */
+	  struct instr_info ins_mips16;
+	  ins_mips16.start_pc = memaddr;
+	  snprintf(ins_mips16.mnemonic, sizeof(ins_mips16.mnemonic), "%s", op->name);
+	  ins_mips16.operands[0] = '\0';
+	  if (op->args[0]) {
+	    const char *args_p = op->args;
+	    int oj = 0;
+	    while (*args_p && oj < 255) {
+	      ins_mips16.operands[oj++] = *args_p++;
+	    }
+	    ins_mips16.operands[oj] = '\0';
+	  }
+	  if (instruccion_hook) instruccion_hook((void *)&ins_mips16);
+
 	  return match == MATCH_FULL ? 4 : 2;
 	}
     }
@@ -2625,6 +2661,22 @@ print_insn_micromips (bfd_vma memaddr, struct disassemble_info *info)
 	  else if ((op->pinfo
 		    & (INSN_STORE_MEMORY | INSN_LOAD_MEMORY)) != 0)
 	    info->insn_type = dis_dref;
+
+
+	  /* --- Hook for Plugin microMIPS --- */
+	  struct instr_info ins_micromips;
+	  ins_micromips.start_pc = memaddr;
+	  snprintf(ins_micromips.mnemonic, sizeof(ins_micromips.mnemonic), "%s", op->name);
+	  ins_micromips.operands[0] = '\0';
+	  if (op->args[0]) {
+	    const char *args_p = op->args;
+	    int oj = 0;
+	    while (*args_p && oj < 255) {
+	      ins_micromips.operands[oj++] = *args_p++;
+	    }
+	    ins_micromips.operands[oj] = '\0';
+	  }
+	  if (instruccion_hook) instruccion_hook((void *)&ins_micromips);
 
 	  return length;
 	}

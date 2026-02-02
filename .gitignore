@@ -76,3 +76,6 @@ stamp-*
 /gmp*
 /isl*
 /gettext*
+
+
+tests/example_output/outputPluginV2.txt

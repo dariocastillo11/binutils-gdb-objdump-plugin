@@ -1,0 +1,544 @@
+[INFO] Plugin loaded successfully
+
+/home/dario.castillo/Desktop/binarios/arquitecturas/programa_i386:     file format elf32-i386
+
+
+Disassembly of section .init:
+>>> SECTION: .init (Arch: elf32-i386)
+
+
+
+00001000 <_init>:
+###   [LABEL] _init (Type: FUNCTION, Address: 0x1000)###
+
+
+    1000:	[Instruction #1] push  [OPERAND x1] %ebx
+53                   	push   %ebx
+    1001:	[Instruction #2] sub  [OPERAND x2] $0x8 %esp
+83 ec 08             	sub    $0x8,%esp
+    1004:	[Instruction #3] call  [OPERAND x1] 0x1090
+e8 87 00 00 00       	call   1090 <__x86.get_pc_thunk.bx>
+    1009:	[Instruction #4] add  [OPERAND x2] $0x2fcf %ebx
+81 c3 cf 2f 00 00    	add    $0x2fcf,%ebx
+    100f:	[Instruction #5] mov  [OPERAND x2] 0x1c(%ebx) %eax
+8b 83 1c 00 00 00    	mov    0x1c(%ebx),%eax
+    1015:	[Instruction #6] test  [OPERAND x2] %eax %eax
+85 c0                	test   %eax,%eax
+    1017:	[Instruction #7] je  [OPERAND x1] 0x101b
+74 02                	je     101b <_init+0x1b>
+    1019:	[Instruction #8] call  [OPERAND x1] *%eax
+ff d0                	call   *%eax
+    101b:	[Instruction #9] add  [OPERAND x2] $0x8 %esp
+83 c4 08             	add    $0x8,%esp
+    101e:	[Instruction #10] pop  [OPERAND x1] %ebx
+5b                   	pop    %ebx
+    101f:	[Instruction #11] ret 
+c3                   	ret
+
+Disassembly of section .plt:
+>>> SECTION: .plt (Arch: elf32-i386)
+
+
+
+00001020 <__libc_start_main@plt-0x10>:
+###   [LABEL] __libc_start_main@plt (Type: FUNCTION, Address: 0x1030)###
+
+
+    1020:	[Instruction #12] push  [OPERAND x1] 0x4(%ebx)
+ff b3 04 00 00 00    	push   0x4(%ebx)
+    1026:	[Instruction #13] jmp  [OPERAND x1] *0x8(%ebx)
+ff a3 08 00 00 00    	jmp    *0x8(%ebx)
+    102c:	[Instruction #14] add  [OPERAND x2] %al (%eax)
+00 00                	add    %al,(%eax)
+	...
+
+00001030 <__libc_start_main@plt>:
+###   [LABEL] __libc_start_main@plt (Type: FUNCTION, Address: 0x1030)###
+
+
+    1030:	[Instruction #15] jmp  [OPERAND x1] *0xc(%ebx)
+ff a3 0c 00 00 00    	jmp    *0xc(%ebx)
+    1036:	[Instruction #16] push  [OPERAND x1] $0x0
+68 00 00 00 00       	push   $0x0
+    103b:	[Instruction #17] jmp  [OPERAND x1] 0x1020
+e9 e0 ff ff ff       	jmp    1020 <_init+0x20>
+
+00001040 <printf@plt>:
+###   [LABEL] printf@plt (Type: FUNCTION, Address: 0x1040)###
+
+
+    1040:	[Instruction #18] jmp  [OPERAND x1] *0x10(%ebx)
+ff a3 10 00 00 00    	jmp    *0x10(%ebx)
+    1046:	[Instruction #19] push  [OPERAND x1] $0x8
+68 08 00 00 00       	push   $0x8
+    104b:	[Instruction #20] jmp  [OPERAND x1] 0x1020
+e9 d0 ff ff ff       	jmp    1020 <_init+0x20>
+
+Disassembly of section .plt.got:
+>>> SECTION: .plt.got (Arch: elf32-i386)
+
+
+
+00001050 <__cxa_finalize@plt>:
+###   [LABEL] __cxa_finalize@plt (Type: FUNCTION, Address: 0x1050)###
+
+
+    1050:	[Instruction #21] jmp  [OPERAND x1] *0x18(%ebx)
+ff a3 18 00 00 00    	jmp    *0x18(%ebx)
+    1056:	[Instruction #22] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf32-i386)
+
+
+
+00001060 <_start>:
+###   [LABEL] _start (Type: FUNCTION, Address: 0x1060)###
+
+
+    1060:	[Instruction #23] xor  [OPERAND x2] %ebp %ebp
+31 ed                	xor    %ebp,%ebp
+    1062:	[Instruction #24] pop  [OPERAND x1] %esi
+5e                   	pop    %esi
+    1063:	[Instruction #25] mov  [OPERAND x2] %esp %ecx
+89 e1                	mov    %esp,%ecx
+    1065:	[Instruction #26] and  [OPERAND x2] $0xfffffff0 %esp
+83 e4 f0             	and    $0xfffffff0,%esp
+    1068:	[Instruction #27] push  [OPERAND x1] %eax
+50                   	push   %eax
+    1069:	[Instruction #28] push  [OPERAND x1] %esp
+54                   	push   %esp
+    106a:	[Instruction #29] push  [OPERAND x1] %edx
+52                   	push   %edx
+    106b:	[Instruction #30] call  [OPERAND x1] 0x1088
+e8 18 00 00 00       	call   1088 <_start+0x28>
+    1070:	[Instruction #31] add  [OPERAND x2] $0x2f68 %ebx
+81 c3 68 2f 00 00    	add    $0x2f68,%ebx
+    1076:	[Instruction #32] push  [OPERAND x1] $0x0
+6a 00                	push   $0x0
+    1078:	[Instruction #33] push  [OPERAND x1] $0x0
+6a 00                	push   $0x0
+    107a:	[Instruction #34] push  [OPERAND x1] %ecx
+51                   	push   %ecx
+    107b:	[Instruction #35] push  [OPERAND x1] %esi
+56                   	push   %esi
+    107c:	[Instruction #36] push  [OPERAND x1] 0x20(%ebx)
+ff b3 20 00 00 00    	push   0x20(%ebx)
+    1082:	[Instruction #37] call  [OPERAND x1] 0x1030
+e8 a9 ff ff ff       	call   1030 <__libc_start_main@plt>
+    1087:	[Instruction #38] hlt 
+f4                   	hlt
+    1088:	[Instruction #39] mov  [OPERAND x2] (%esp) %ebx
+8b 1c 24             	mov    (%esp),%ebx
+    108b:	[Instruction #40] ret 
+c3                   	ret
+    108c:	[Instruction #41] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+    108e:	[Instruction #42] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+
+00001090 <__x86.get_pc_thunk.bx>:
+###   [LABEL] __x86.get_pc_thunk.bx (Type: FUNCTION, Address: 0x1090)###
+
+
+    1090:	[Instruction #43] mov  [OPERAND x2] (%esp) %ebx
+8b 1c 24             	mov    (%esp),%ebx
+    1093:	[Instruction #44] ret 
+c3                   	ret
+    1094:	[Instruction #45] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+    1096:	[Instruction #46] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+    1098:	[Instruction #47] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+    109a:	[Instruction #48] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+    109c:	[Instruction #49] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+    109e:	[Instruction #50] xchg  [OPERAND x2] %ax %ax
+66 90                	xchg   %ax,%ax
+
+000010a0 <deregister_tm_clones>:
+###   [LABEL] deregister_tm_clones (Type: FUNCTION, Address: 0x10a0)###
+
+
+    10a0:	[Instruction #51] call  [OPERAND x1] 0x1189
+e8 e4 00 00 00       	call   1189 <__x86.get_pc_thunk.dx>
+    10a5:	[Instruction #52] add  [OPERAND x2] $0x2f33 %edx
+81 c2 33 2f 00 00    	add    $0x2f33,%edx
+    10ab:	[Instruction #53] lea  [OPERAND x2] 0x30(%edx) %ecx
+8d 8a 30 00 00 00    	lea    0x30(%edx),%ecx
+    10b1:	[Instruction #54] lea  [OPERAND x2] 0x30(%edx) %eax
+8d 82 30 00 00 00    	lea    0x30(%edx),%eax
+    10b7:	[Instruction #55] cmp  [OPERAND x2] %ecx %eax
+39 c8                	cmp    %ecx,%eax
+    10b9:	[Instruction #56] je  [OPERAND x1] 0x10d8
+74 1d                	je     10d8 <deregister_tm_clones+0x38>
+    10bb:	[Instruction #57] mov  [OPERAND x2] 0x14(%edx) %eax
+8b 82 14 00 00 00    	mov    0x14(%edx),%eax
+    10c1:	[Instruction #58] test  [OPERAND x2] %eax %eax
+85 c0                	test   %eax,%eax
+    10c3:	[Instruction #59] je  [OPERAND x1] 0x10d8
+74 13                	je     10d8 <deregister_tm_clones+0x38>
+    10c5:	[Instruction #60] push  [OPERAND x1] %ebp
+55                   	push   %ebp
+    10c6:	[Instruction #61] mov  [OPERAND x2] %esp %ebp
+89 e5                	mov    %esp,%ebp
+    10c8:	[Instruction #62] sub  [OPERAND x2] $0x14 %esp
+83 ec 14             	sub    $0x14,%esp
+    10cb:	[Instruction #63] push  [OPERAND x1] %ecx
+51                   	push   %ecx
+    10cc:	[Instruction #64] call  [OPERAND x1] *%eax
+ff d0                	call   *%eax
+    10ce:	[Instruction #65] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    10d1:	[Instruction #66] leave 
+c9                   	leave
+    10d2:	[Instruction #67] ret 
+c3                   	ret
+    10d3:	[Instruction #68] lea  [OPERAND x4] %cs:0x0(%esi %eiz 1) %esi
+2e 8d 74 26 00       	lea    %cs:0x0(%esi,%eiz,1),%esi
+    10d8:	[Instruction #69] ret 
+c3                   	ret
+    10d9:	[Instruction #70] lea  [OPERAND x4] 0x0(%esi %eiz 1) %esi
+8d b4 26 00 00 00 00 	lea    0x0(%esi,%eiz,1),%esi
+
+000010e0 <register_tm_clones>:
+###   [LABEL] register_tm_clones (Type: FUNCTION, Address: 0x10e0)###
+
+
+    10e0:	[Instruction #71] call  [OPERAND x1] 0x1189
+e8 a4 00 00 00       	call   1189 <__x86.get_pc_thunk.dx>
+    10e5:	[Instruction #72] add  [OPERAND x2] $0x2ef3 %edx
+81 c2 f3 2e 00 00    	add    $0x2ef3,%edx
+    10eb:	[Instruction #73] push  [OPERAND x1] %ebp
+55                   	push   %ebp
+    10ec:	[Instruction #74] mov  [OPERAND x2] %esp %ebp
+89 e5                	mov    %esp,%ebp
+    10ee:	[Instruction #75] push  [OPERAND x1] %ebx
+53                   	push   %ebx
+    10ef:	[Instruction #76] lea  [OPERAND x2] 0x30(%edx) %ecx
+8d 8a 30 00 00 00    	lea    0x30(%edx),%ecx
+    10f5:	[Instruction #77] lea  [OPERAND x2] 0x30(%edx) %eax
+8d 82 30 00 00 00    	lea    0x30(%edx),%eax
+    10fb:	[Instruction #78] sub  [OPERAND x2] $0x4 %esp
+83 ec 04             	sub    $0x4,%esp
+    10fe:	[Instruction #79] sub  [OPERAND x2] %ecx %eax
+29 c8                	sub    %ecx,%eax
+    1100:	[Instruction #80] mov  [OPERAND x2] %eax %ebx
+89 c3                	mov    %eax,%ebx
+    1102:	[Instruction #81] shr  [OPERAND x2] $0x1f %eax
+c1 e8 1f             	shr    $0x1f,%eax
+    1105:	[Instruction #82] sar  [OPERAND x2] $0x2 %ebx
+c1 fb 02             	sar    $0x2,%ebx
+    1108:	[Instruction #83] add  [OPERAND x2] %ebx %eax
+01 d8                	add    %ebx,%eax
+    110a:	[Instruction #84] sar  [OPERAND x2] $1 %eax
+d1 f8                	sar    $1,%eax
+    110c:	[Instruction #85] je  [OPERAND x1] 0x1122
+74 14                	je     1122 <register_tm_clones+0x42>
+    110e:	[Instruction #86] mov  [OPERAND x2] 0x24(%edx) %edx
+8b 92 24 00 00 00    	mov    0x24(%edx),%edx
+    1114:	[Instruction #87] test  [OPERAND x2] %edx %edx
+85 d2                	test   %edx,%edx
+    1116:	[Instruction #88] je  [OPERAND x1] 0x1122
+74 0a                	je     1122 <register_tm_clones+0x42>
+    1118:	[Instruction #89] sub  [OPERAND x2] $0x8 %esp
+83 ec 08             	sub    $0x8,%esp
+    111b:	[Instruction #90] push  [OPERAND x1] %eax
+50                   	push   %eax
+    111c:	[Instruction #91] push  [OPERAND x1] %ecx
+51                   	push   %ecx
+    111d:	[Instruction #92] call  [OPERAND x1] *%edx
+ff d2                	call   *%edx
+    111f:	[Instruction #93] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    1122:	[Instruction #94] mov  [OPERAND x2] -0x4(%ebp) %ebx
+8b 5d fc             	mov    -0x4(%ebp),%ebx
+    1125:	[Instruction #95] leave 
+c9                   	leave
+    1126:	[Instruction #96] ret 
+c3                   	ret
+    1127:	[Instruction #97] lea  [OPERAND x4] %cs:0x0(%esi %eiz 1) %esi
+2e 8d b4 26 00 00 00 	lea    %cs:0x0(%esi,%eiz,1),%esi
+    112e:	00 
+    112f:	[Instruction #98] nop 
+90                   	nop
+
+00001130 <__do_global_dtors_aux>:
+###   [LABEL] __do_global_dtors_aux (Type: FUNCTION, Address: 0x1130)###
+
+
+    1130:	[Instruction #99] endbr32  # STRING-OP
+f3 0f 1e fb          	endbr32
+    1134:	[Instruction #100] push  [OPERAND x1] %ebp
+55                   	push   %ebp
+    1135:	[Instruction #101] mov  [OPERAND x2] %esp %ebp
+89 e5                	mov    %esp,%ebp
+    1137:	[Instruction #102] push  [OPERAND x1] %ebx
+53                   	push   %ebx
+    1138:	[Instruction #103] call  [OPERAND x1] 0x1090
+e8 53 ff ff ff       	call   1090 <__x86.get_pc_thunk.bx>
+    113d:	[Instruction #104] add  [OPERAND x2] $0x2e9b %ebx
+81 c3 9b 2e 00 00    	add    $0x2e9b,%ebx
+    1143:	[Instruction #105] sub  [OPERAND x2] $0x4 %esp
+83 ec 04             	sub    $0x4,%esp
+    1146:	[Instruction #106] cmpb  [OPERAND x2] $0x0 0x30(%ebx)
+80 bb 30 00 00 00 00 	cmpb   $0x0,0x30(%ebx)
+    114d:	[Instruction #107] jne  [OPERAND x1] 0x1176
+75 27                	jne    1176 <__do_global_dtors_aux+0x46>
+    114f:	[Instruction #108] mov  [OPERAND x2] 0x18(%ebx) %eax
+8b 83 18 00 00 00    	mov    0x18(%ebx),%eax
+    1155:	[Instruction #109] test  [OPERAND x2] %eax %eax
+85 c0                	test   %eax,%eax
+    1157:	[Instruction #110] je  [OPERAND x1] 0x116a
+74 11                	je     116a <__do_global_dtors_aux+0x3a>
+    1159:	[Instruction #111] sub  [OPERAND x2] $0xc %esp
+83 ec 0c             	sub    $0xc,%esp
+    115c:	[Instruction #112] push  [OPERAND x1] 0x2c(%ebx)
+ff b3 2c 00 00 00    	push   0x2c(%ebx)
+    1162:	[Instruction #113] call  [OPERAND x1] 0x1050
+e8 e9 fe ff ff       	call   1050 <__cxa_finalize@plt>
+    1167:	[Instruction #114] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    116a:	[Instruction #115] call  [OPERAND x1] 0x10a0
+e8 31 ff ff ff       	call   10a0 <deregister_tm_clones>
+    116f:	[Instruction #116] movb  [OPERAND x2] $0x1 0x30(%ebx)
+c6 83 30 00 00 00 01 	movb   $0x1,0x30(%ebx)
+    1176:	[Instruction #117] mov  [OPERAND x2] -0x4(%ebp) %ebx
+8b 5d fc             	mov    -0x4(%ebp),%ebx
+    1179:	[Instruction #118] leave 
+c9                   	leave
+    117a:	[Instruction #119] ret 
+c3                   	ret
+    117b:	[Instruction #120] lea  [OPERAND x4] %cs:0x0(%esi %eiz 1) %esi
+2e 8d 74 26 00       	lea    %cs:0x0(%esi,%eiz,1),%esi
+
+00001180 <frame_dummy>:
+###   [LABEL] frame_dummy (Type: FUNCTION, Address: 0x1180)###
+
+
+    1180:	[Instruction #121] endbr32  # STRING-OP
+f3 0f 1e fb          	endbr32
+    1184:	[Instruction #122] jmp  [OPERAND x1] 0x10e0
+e9 57 ff ff ff       	jmp    10e0 <register_tm_clones>
+
+00001189 <__x86.get_pc_thunk.dx>:
+###   [LABEL] __x86.get_pc_thunk.dx (Type: FUNCTION, Address: 0x1189)###
+
+
+    1189:	[Instruction #123] mov  [OPERAND x2] (%esp) %edx
+8b 14 24             	mov    (%esp),%edx
+    118c:	[Instruction #124] ret 
+c3                   	ret
+
+0000118d <suma>:
+###   [LABEL] suma (Type: FUNCTION, Address: 0x118d)###
+
+
+    118d:	[Instruction #125] push  [OPERAND x1] %ebp
+55                   	push   %ebp
+    118e:	[Instruction #126] mov  [OPERAND x2] %esp %ebp
+89 e5                	mov    %esp,%ebp
+    1190:	[Instruction #127] call  [OPERAND x1] 0x125c
+e8 c7 00 00 00       	call   125c <__x86.get_pc_thunk.ax>
+    1195:	[Instruction #128] add  [OPERAND x2] $0x2e43 %eax
+05 43 2e 00 00       	add    $0x2e43,%eax
+    119a:	[Instruction #129] mov  [OPERAND x2] 0x8(%ebp) %edx
+8b 55 08             	mov    0x8(%ebp),%edx
+    119d:	[Instruction #130] mov  [OPERAND x2] 0xc(%ebp) %eax
+8b 45 0c             	mov    0xc(%ebp),%eax
+    11a0:	[Instruction #131] add  [OPERAND x2] %edx %eax
+01 d0                	add    %edx,%eax
+    11a2:	[Instruction #132] pop  [OPERAND x1] %ebp
+5d                   	pop    %ebp
+    11a3:	[Instruction #133] ret 
+c3                   	ret
+
+000011a4 <factorial>:
+###   [LABEL] factorial (Type: FUNCTION, Address: 0x11a4)###
+
+
+    11a4:	[Instruction #134] push  [OPERAND x1] %ebp
+55                   	push   %ebp
+    11a5:	[Instruction #135] mov  [OPERAND x2] %esp %ebp
+89 e5                	mov    %esp,%ebp
+    11a7:	[Instruction #136] sub  [OPERAND x2] $0x8 %esp
+83 ec 08             	sub    $0x8,%esp
+    11aa:	[Instruction #137] call  [OPERAND x1] 0x125c
+e8 ad 00 00 00       	call   125c <__x86.get_pc_thunk.ax>
+    11af:	[Instruction #138] add  [OPERAND x2] $0x2e29 %eax
+05 29 2e 00 00       	add    $0x2e29,%eax
+    11b4:	[Instruction #139] cmpl  [OPERAND x2] $0x1 0x8(%ebp)
+83 7d 08 01          	cmpl   $0x1,0x8(%ebp)
+    11b8:	[Instruction #140] jg  [OPERAND x1] 0x11c1
+7f 07                	jg     11c1 <factorial+0x1d>
+    11ba:	[Instruction #141] mov  [OPERAND x2] $0x1 %eax
+b8 01 00 00 00       	mov    $0x1,%eax
+    11bf:	[Instruction #142] jmp  [OPERAND x1] 0x11d7
+eb 16                	jmp    11d7 <factorial+0x33>
+    11c1:	[Instruction #143] mov  [OPERAND x2] 0x8(%ebp) %eax
+8b 45 08             	mov    0x8(%ebp),%eax
+    11c4:	[Instruction #144] sub  [OPERAND x2] $0x1 %eax
+83 e8 01             	sub    $0x1,%eax
+    11c7:	[Instruction #145] sub  [OPERAND x2] $0xc %esp
+83 ec 0c             	sub    $0xc,%esp
+    11ca:	[Instruction #146] push  [OPERAND x1] %eax
+50                   	push   %eax
+    11cb:	[Instruction #147] call  [OPERAND x1] 0x11a4
+e8 d4 ff ff ff       	call   11a4 <factorial>
+    11d0:	[Instruction #148] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    11d3:	[Instruction #149] imul  [OPERAND x2] 0x8(%ebp) %eax
+0f af 45 08          	imul   0x8(%ebp),%eax
+    11d7:	[Instruction #150] leave 
+c9                   	leave
+    11d8:	[Instruction #151] ret 
+c3                   	ret
+
+000011d9 <main>:
+###   [LABEL] main (Type: FUNCTION, Address: 0x11d9)###
+
+
+    11d9:	[Instruction #152] lea  [OPERAND x2] 0x4(%esp) %ecx
+8d 4c 24 04          	lea    0x4(%esp),%ecx
+    11dd:	[Instruction #153] and  [OPERAND x2] $0xfffffff0 %esp
+83 e4 f0             	and    $0xfffffff0,%esp
+    11e0:	[Instruction #154] push  [OPERAND x1] -0x4(%ecx)
+ff 71 fc             	push   -0x4(%ecx)
+    11e3:	[Instruction #155] push  [OPERAND x1] %ebp
+55                   	push   %ebp
+    11e4:	[Instruction #156] mov  [OPERAND x2] %esp %ebp
+89 e5                	mov    %esp,%ebp
+    11e6:	[Instruction #157] push  [OPERAND x1] %ebx
+53                   	push   %ebx
+    11e7:	[Instruction #158] push  [OPERAND x1] %ecx
+51                   	push   %ecx
+    11e8:	[Instruction #159] sub  [OPERAND x2] $0x10 %esp
+83 ec 10             	sub    $0x10,%esp
+    11eb:	[Instruction #160] call  [OPERAND x1] 0x1090
+e8 a0 fe ff ff       	call   1090 <__x86.get_pc_thunk.bx>
+    11f0:	[Instruction #161] add  [OPERAND x2] $0x2de8 %ebx
+81 c3 e8 2d 00 00    	add    $0x2de8,%ebx
+    11f6:	[Instruction #162] movl  [OPERAND x2] $0xa -0x14(%ebp)
+c7 45 ec 0a 00 00 00 	movl   $0xa,-0x14(%ebp)
+    11fd:	[Instruction #163] movl  [OPERAND x2] $0x14 -0x10(%ebp)
+c7 45 f0 14 00 00 00 	movl   $0x14,-0x10(%ebp)
+    1204:	[Instruction #164] push  [OPERAND x1] -0x10(%ebp)
+ff 75 f0             	push   -0x10(%ebp)
+    1207:	[Instruction #165] push  [OPERAND x1] -0x14(%ebp)
+ff 75 ec             	push   -0x14(%ebp)
+    120a:	[Instruction #166] call  [OPERAND x1] 0x118d
+e8 7e ff ff ff       	call   118d <suma>
+    120f:	[Instruction #167] add  [OPERAND x2] $0x8 %esp
+83 c4 08             	add    $0x8,%esp
+    1212:	[Instruction #168] mov  [OPERAND x2] %eax -0xc(%ebp)
+89 45 f4             	mov    %eax,-0xc(%ebp)
+    1215:	[Instruction #169] push  [OPERAND x1] -0xc(%ebp)
+ff 75 f4             	push   -0xc(%ebp)
+    1218:	[Instruction #170] push  [OPERAND x1] -0x10(%ebp)
+ff 75 f0             	push   -0x10(%ebp)
+    121b:	[Instruction #171] push  [OPERAND x1] -0x14(%ebp)
+ff 75 ec             	push   -0x14(%ebp)
+    121e:	[Instruction #172] lea  [OPERAND x2] -0x1fd0(%ebx) %eax
+8d 83 30 e0 ff ff    	lea    -0x1fd0(%ebx),%eax
+    1224:	[Instruction #173] push  [OPERAND x1] %eax
+50                   	push   %eax
+    1225:	[Instruction #174] call  [OPERAND x1] 0x1040
+e8 16 fe ff ff       	call   1040 <printf@plt>
+    122a:	[Instruction #175] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    122d:	[Instruction #176] sub  [OPERAND x2] $0xc %esp
+83 ec 0c             	sub    $0xc,%esp
+    1230:	[Instruction #177] push  [OPERAND x1] $0x5
+6a 05                	push   $0x5
+    1232:	[Instruction #178] call  [OPERAND x1] 0x11a4
+e8 6d ff ff ff       	call   11a4 <factorial>
+    1237:	[Instruction #179] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    123a:	[Instruction #180] sub  [OPERAND x2] $0x8 %esp
+83 ec 08             	sub    $0x8,%esp
+    123d:	[Instruction #181] push  [OPERAND x1] %eax
+50                   	push   %eax
+    123e:	[Instruction #182] lea  [OPERAND x2] -0x1fba(%ebx) %eax
+8d 83 46 e0 ff ff    	lea    -0x1fba(%ebx),%eax
+    1244:	[Instruction #183] push  [OPERAND x1] %eax
+50                   	push   %eax
+    1245:	[Instruction #184] call  [OPERAND x1] 0x1040
+e8 f6 fd ff ff       	call   1040 <printf@plt>
+    124a:	[Instruction #185] add  [OPERAND x2] $0x10 %esp
+83 c4 10             	add    $0x10,%esp
+    124d:	[Instruction #186] mov  [OPERAND x2] $0x0 %eax
+b8 00 00 00 00       	mov    $0x0,%eax
+    1252:	[Instruction #187] lea  [OPERAND x2] -0x8(%ebp) %esp
+8d 65 f8             	lea    -0x8(%ebp),%esp
+    1255:	[Instruction #188] pop  [OPERAND x1] %ecx
+59                   	pop    %ecx
+    1256:	[Instruction #189] pop  [OPERAND x1] %ebx
+5b                   	pop    %ebx
+    1257:	[Instruction #190] pop  [OPERAND x1] %ebp
+5d                   	pop    %ebp
+    1258:	[Instruction #191] lea  [OPERAND x2] -0x4(%ecx) %esp
+8d 61 fc             	lea    -0x4(%ecx),%esp
+    125b:	[Instruction #192] ret 
+c3                   	ret
+
+0000125c <__x86.get_pc_thunk.ax>:
+###   [LABEL] __x86.get_pc_thunk.ax (Type: FUNCTION, Address: 0x125c)###
+
+
+    125c:	[Instruction #193] mov  [OPERAND x2] (%esp) %eax
+8b 04 24             	mov    (%esp),%eax
+    125f:	[Instruction #194] ret 
+c3                   	ret
+
+Disassembly of section .fini:
+>>> SECTION: .fini (Arch: elf32-i386)
+
+
+
+00001260 <_fini>:
+###   [LABEL] _fini (Type: FUNCTION, Address: 0x1260)###
+
+
+    1260:	[Instruction #195] push  [OPERAND x1] %ebx
+53                   	push   %ebx
+    1261:	[Instruction #196] sub  [OPERAND x2] $0x8 %esp
+83 ec 08             	sub    $0x8,%esp
+    1264:	[Instruction #197] call  [OPERAND x1] 0x1090
+e8 27 fe ff ff       	call   1090 <__x86.get_pc_thunk.bx>
+    1269:	[Instruction #198] add  [OPERAND x2] $0x2d6f %ebx
+81 c3 6f 2d 00 00    	add    $0x2d6f,%ebx
+    126f:	[Instruction #199] add  [OPERAND x2] $0x8 %esp
+83 c4 08             	add    $0x8,%esp
+    1272:	[Instruction #200] pop  [OPERAND x1] %ebx
+5b                   	pop    %ebx
+    1273:	[Instruction #201] ret 
+c3                   	ret
+
+[INFO] Instructions written to: disasm_output.txt
+
+╔════════════════════════════════════════════════════════╗
+║               INSTRUCTION STATISTICS                   ║
+║ Architecture: elf32-i386                               ║
+╠════════════════════════════════════════════════════════╣
+║ Total files processed:                 0 
+║ Total sections processed:              5 
+║ Total labels processed:                17 
+║ Total instructions:                    201 
+║ Invalid instructions (BAD):            0 
+╠════════════════════════════════════════════════════════╣
+║ Calls (CALL):                          20 
+║ Jumps (JUMP):                          16 
+║ Returns (RET):                         13 
+║ Instructions with REX.W:               0 
+║ Atomic operations (LOCK):              0 
+║ String operations (REP):               2 
+║ Stack canaries detected:               0 
+╚════════════════════════════════════════════════════════╝
+║ Regex pattern dereference (file):      47        
+║ Regex pattern indirect call (file):    3        
+╚════════════════════════════════════════════════════════╝
+
+[INFO] Plugin closed

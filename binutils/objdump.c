@@ -1,5 +1,5 @@
 /* objdump.c -- dump information about an object file.
-   Copyright (C) 1990-2026 Free Software Foundation, Inc.
+   Copyright (C) 1990-2025 Free Software Foundation, Inc.
 
    This file is part of GNU Binutils.
 
@@ -47,7 +47,12 @@
    by symbols, calling disassemble_bytes() on each block.  The actual
    disassembling is done by the libopcodes library, via a function pointer
    supplied by the disassembler() function.  */
-
+#ifndef LOCALEDIR
+#define LOCALEDIR "/usr/share/locale"
+#endif
+#ifndef OBJDUMP_PRIVATE_VECTORS
+#define OBJDUMP_PRIVATE_VECTORS
+#endif
 #include "sysdep.h"
 #include "bfd.h"
 #include "elf-bfd.h"
@@ -67,6 +72,26 @@
 #include "debug.h"
 #include "budbg.h"
 #include "objdump.h"
+#include <dlfcn.h>
+#include "../plugins/objdump_plugin.h" // Include plugin header
+#include "../opcodes/i386_dis_instr_info.h"
+
+static void *g_plugin_handle = NULL;
+typedef void (*bad_plugin_cb_t)(const char *);
+static plugin_cb_t g_plugin_callback = NULL;//instruction callback
+static bad_plugin_cb_t g_bad_plugin_callback = NULL;//bad instruction callback
+static file_plugin_cb_t g_file_plugin_callback = NULL;//new file callback
+static section_plugin_cb_t g_section_plugin_callback = NULL;//new section callback
+static label_plugin_cb_t g_label_plugin_callback = NULL;//new label callback
+
+static void init_plugin(void);// Plugin initialization function
+static void cleanup_plugin(void);// Plugin cleanup function
+void instruccion_hook(struct instr_info *ins);// Instruction callback
+void bad_instruccion_hook(const char *bad_reason);// Bad instruction callback
+void file_hook(const char *filename);// New file callback
+void section_hook(const char *section_name, const char *arch_name);// New section callback
+void label_hook(const char *label_name, const char *symbol_type, unsigned long address);// New label callback
+
 
 #ifdef HAVE_MMAP
 #include <sys/mman.h>
@@ -253,7 +278,6 @@ typedef enum unicode_display_type
 } unicode_display_type;
 
 static unicode_display_type unicode_display = unicode_default;
-
 static void usage (FILE *, int) ATTRIBUTE_NORETURN;
 static void
 usage (FILE *stream, int status)
@@ -3459,6 +3483,9 @@ disassemble_bytes (struct disassemble_info *inf,
 			 starting somewhere inside it.  Discover the length
 			 of the current insn so that the check below will
 			 work.  */
+
+
+         
 		      if (insn_width)
 			insn_size = insn_width;
 		      else
@@ -3475,8 +3502,13 @@ disassemble_bytes (struct disassemble_info *inf,
 			  disassemble_set_printf
 			    (inf, inf->stream, (fprintf_ftype) null_print,
 			     (fprintf_styled_ftype) null_styled_print);
-			  insn_size = disassemble_fn (section->vma
+			  bfd_vma pc =section->vma + addr_offset;
+
+				insn_size = disassemble_fn (section->vma
 						      + addr_offset, inf);
+				
+				insn_size = disassemble_fn(pc,inf);
+				//fin cambios nuevos
 			  disassemble_set_printf
 			    (inf, inf->stream,
 			     (fprintf_ftype) objdump_sprintf,
@@ -3746,7 +3778,7 @@ disassemble_bytes (struct disassemble_info *inf,
 static void
 disassemble_section (bfd *abfd, asection *section, void *inf)
 {
-  elf_backend_data *bed;
+  const struct elf_backend_data *bed;
   bfd_vma sign_adjust = 0;
   struct disassemble_info *pinfo = (struct disassemble_info *) inf;
   struct objdump_disasm_info *paux;
@@ -3874,6 +3906,9 @@ disassemble_section (bfd *abfd, asection *section, void *inf)
     qsort (sorted_syms, sorted_symcount, sizeof (asymbol *), compare_symbols);
 
   printf (_("\nDisassembly of section %s:\n"), sanitize_string (section->name));
+  
+  /* Hook para notificar al plugin de la nueva sección */
+  section_hook(section->name, bfd_get_target(abfd));
 
   /* Find the nearest symbol forwards from our current position.  */
   paux->require_sec = true;
@@ -4020,6 +4055,16 @@ disassemble_section (bfd *abfd, asection *section, void *inf)
 	  objdump_print_addr_with_sym (abfd, section, sym, addr,
 				       pinfo, false);
 	  pinfo->fprintf_func (pinfo->stream, ":\n");
+
+	  /* Hook para notificar al plugin del nuevo label */
+	  if (sym != NULL) {
+	      const char *sym_name = bfd_asymbol_name(sym);
+	      const char *sym_type = "UNKNOWN";
+	      if (sym->flags & BSF_FUNCTION) sym_type = "FUNCTION";
+	      else if (sym->flags & BSF_OBJECT) sym_type = "OBJECT";
+	      else if (sym->flags & BSF_SECTION_SYM) sym_type = "SECTION";
+	      label_hook(sym_name, sym_type, bfd_asymbol_value(sym));
+	  }
 
 	  if (sym != NULL && show_all_symbols)
 	    {
@@ -5689,7 +5734,7 @@ might_need_separate_debug_info (bool is_mainfile)
 static void
 dump_bfd (bfd *abfd, bool is_mainfile)
 {
-  elf_backend_data *bed;
+  const struct elf_backend_data * bed;
 
   if (bfd_big_endian (abfd))
     byte_get = byte_get_big_endian;
@@ -5967,6 +6012,9 @@ display_any_bfd (bfd *file, int level)
 	  if (last_arfile != NULL)
 	    bfd_close (last_arfile);
 
+	  /* Hook para notificar al plugin del nuevo archivo */
+	  file_hook(bfd_get_filename(arfile));
+
 	  display_any_bfd (arfile, level + 1);
 
 	  last_arfile = arfile;
@@ -6001,13 +6049,16 @@ display_file (char *filename, char *target)
 
   bfd_close (file);
 }
-
+
 int
 main (int argc, char **argv)
 {
   int c;
   char *target = default_target;
   bool seenflag = false;
+
+// Hook for plugin initialization
+init_plugin();
 
 #ifdef HAVE_LC_MESSAGES
   setlocale (LC_MESSAGES, "");
@@ -6435,5 +6486,124 @@ main (int argc, char **argv)
   free ((void *) source_comment);
   free (dump_ctf_parent_section_name);
 
+  // Hook for plugin cleanup and unloading
+  cleanup_plugin();
+
   return exit_status;
+}
+
+/**
+ * Initializes and loads the objdump plugin if it is not already loaded.
+ */
+static void
+init_plugin(void)
+{
+    if (g_plugin_handle != NULL)
+        return;  
+
+    g_plugin_handle = dlopen("./objdump_pluginv2.so", RTLD_NOW);
+    if (!g_plugin_handle) {
+        fprintf(stderr, "Error loading plugin: %s\n", dlerror());
+        return;
+    }
+
+    g_plugin_callback = (plugin_cb_t)dlsym(g_plugin_handle, "instruction_callback");
+    g_bad_plugin_callback = (bad_plugin_cb_t)dlsym(g_plugin_handle, "bad_plugin_callback");
+    g_file_plugin_callback = (file_plugin_cb_t)dlsym(g_plugin_handle, "file_plugin_callback");
+    g_section_plugin_callback = (section_plugin_cb_t)dlsym(g_plugin_handle, "section_plugin_callback");
+    g_label_plugin_callback = (label_plugin_cb_t)dlsym(g_plugin_handle, "label_plugin_callback");
+
+
+    if (!g_plugin_callback) {
+        fprintf(stderr, "Error: instruction_callback not found: %s\n", dlerror());
+        dlclose(g_plugin_handle);
+        g_plugin_handle = NULL;
+    } else {
+        fprintf(stderr, "[INFO] Plugin loaded successfully\n");
+        
+        // Call plugin_start() hook
+        typedef void (*plugin_start_fn)(void);
+        plugin_start_fn start_fn = (plugin_start_fn)dlsym(g_plugin_handle, "plugin_start");
+        if (start_fn) {
+            start_fn();
+        }
+    }
+}
+
+/**
+ * Cleans up and unloads the plugin if it is loaded.
+ */
+static void
+cleanup_plugin(void)
+{
+    if (g_plugin_handle) {
+        // Call plugin_cleanup() hook
+        typedef void (*plugin_cleanup_fn)(void);
+        plugin_cleanup_fn cleanup_fn = (plugin_cleanup_fn)dlsym(g_plugin_handle, "plugin_cleanup");
+        if (cleanup_fn) {
+            cleanup_fn();
+        }
+        
+        // Print statistics
+        typedef void (*print_stats_fn)(void);
+        print_stats_fn print_stats = (print_stats_fn)dlsym(g_plugin_handle, "plugin_print_stats");
+        if (print_stats) {
+            print_stats();
+        }
+        
+        dlclose(g_plugin_handle);
+        g_plugin_handle = NULL;
+        g_plugin_callback = NULL;
+        fprintf(stderr, "[INFO] Plugin closed\n");
+    }
+}
+
+/**
+ * Hook to notify the plugin of a processed instruction.
+ */
+void instruccion_hook(struct instr_info *ins)
+{
+    if (!ins) return;
+  
+    /* Reportar la instrucción al callback del plugin */
+    if (g_plugin_callback) {
+        g_plugin_callback(ins);
+    }
+}
+/**
+ * Hook to notify the plugin of an invalid or problematic instruction.
+ */
+void bad_instruccion_hook(const char *bad_reason)
+{
+  if (g_bad_plugin_callback) {
+      g_bad_plugin_callback(bad_reason);
+  }
+}
+/**
+ * Hook to notify the plugin of a new processed file.
+ */
+void file_hook(const char *filename)
+{
+  if (g_file_plugin_callback) {
+      g_file_plugin_callback(filename);
+  }
+}
+/**
+ * Hook to notify the plugin of a new processed section.
+ */
+void section_hook(const char *section_name, const char *arch_name)
+{
+  if (g_section_plugin_callback) {
+      g_section_plugin_callback(section_name, arch_name);
+  }
+}
+
+/**
+ * Hook to notify the plugin of a new processed label.
+ */
+void label_hook(const char *label_name, const char *symbol_type, unsigned long address)
+{
+  if (g_label_plugin_callback) {
+      g_label_plugin_callback(label_name, symbol_type, address);
+  }
 }

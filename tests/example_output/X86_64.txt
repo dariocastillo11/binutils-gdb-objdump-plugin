@@ -1,0 +1,400 @@
+[INFO] Plugin loaded successfully
+
+/home/dario.castillo/Desktop/binarios/arquitecturas/programa_x86_64:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+>>> SECTION: .init (Arch: elf64-x86-64)
+
+
+
+0000000000001000 <_init>:
+###   [LABEL] _init (Type: FUNCTION, Address: 0x1000)###
+
+
+    1000:	[Instruction #1] 
+f3 0f 1e fa          	endbr64
+    1004:	[Instruction #2] HH 
+48 83 ec 08          	sub    $0x8,%rsp
+    1008:	[Instruction #3] HH 
+48 8b 05 d9 2f 00 00 	mov    0x2fd9(%rip),%rax        # 3fe8 <__gmon_start__@Base>
+    100f:	[Instruction #4] HH 
+48 85 c0             	test   %rax,%rax
+    1012:	[Instruction #5] 
+74 02                	je     1016 <_init+0x16>
+    1014:	[Instruction #6] 
+ff d0                	call   *%rax
+    1016:	[Instruction #7] HH 
+48 83 c4 08          	add    $0x8,%rsp
+    101a:	[Instruction #8] 
+c3                   	ret
+
+Disassembly of section .plt:
+>>> SECTION: .plt (Arch: elf64-x86-64)
+
+
+
+0000000000001020 <.plt>:
+    1020:	[Instruction #9] 
+ff 35 9a 2f 00 00    	push   0x2f9a(%rip)        # 3fc0 <_GLOBAL_OFFSET_TABLE_+0x8>
+    1026:	[Instruction #10] 
+ff 25 9c 2f 00 00    	jmp    *0x2f9c(%rip)        # 3fc8 <_GLOBAL_OFFSET_TABLE_+0x10>
+    102c:	[Instruction #11] 
+0f 1f 40 00          	nopl   0x0(%rax)
+    1030:	[Instruction #12] 
+f3 0f 1e fa          	endbr64
+    1034:	[Instruction #13] 
+68 00 00 00 00       	push   $0x0
+    1039:	[Instruction #14] 
+e9 e2 ff ff ff       	jmp    1020 <_init+0x20>
+    103e:	[Instruction #15] 
+66 90                	xchg   %ax,%ax
+
+Disassembly of section .plt.got:
+>>> SECTION: .plt.got (Arch: elf64-x86-64)
+
+
+
+0000000000001040 <__cxa_finalize@plt>:
+###   [LABEL] __cxa_finalize@plt (Type: FUNCTION, Address: 0x1040)###
+
+
+    1040:	[Instruction #16] 
+f3 0f 1e fa          	endbr64
+    1044:	[Instruction #17] 
+ff 25 ae 2f 00 00    	jmp    *0x2fae(%rip)        # 3ff8 <__cxa_finalize@GLIBC_2.2.5>
+    104a:	[BAD] bad instruction encountered
+[Instruction #18] 
+66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+Disassembly of section .plt.sec:
+>>> SECTION: .plt.sec (Arch: elf64-x86-64)
+
+
+
+0000000000001050 <printf@plt>:
+###   [LABEL] printf@plt (Type: FUNCTION, Address: 0x1050)###
+
+
+    1050:	[Instruction #19] 
+f3 0f 1e fa          	endbr64
+    1054:	[Instruction #20] 
+ff 25 76 2f 00 00    	jmp    *0x2f76(%rip)        # 3fd0 <printf@GLIBC_2.2.5>
+    105a:	[BAD] bad instruction encountered
+[Instruction #21] 
+66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+Disassembly of section .text:
+>>> SECTION: .text (Arch: elf64-x86-64)
+
+
+
+0000000000001060 <_start>:
+###   [LABEL] _start (Type: FUNCTION, Address: 0x1060)###
+
+
+    1060:	[Instruction #22] 
+f3 0f 1e fa          	endbr64
+    1064:	[Instruction #23] 
+31 ed                	xor    %ebp,%ebp
+    1066:	[Instruction #24] II 
+49 89 d1             	mov    %rdx,%r9
+    1069:	[Instruction #25] 
+5e                   	pop    %rsi
+    106a:	[Instruction #26] HH 
+48 89 e2             	mov    %rsp,%rdx
+    106d:	[Instruction #27] HH 
+48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+    1071:	[Instruction #28] 
+50                   	push   %rax
+    1072:	[Instruction #29] 
+54                   	push   %rsp
+    1073:	[Instruction #30] EE 
+45 31 c0             	xor    %r8d,%r8d
+    1076:	[Instruction #31] 
+31 c9                	xor    %ecx,%ecx
+    1078:	[Instruction #32] HH 
+48 8d 3d 11 01 00 00 	lea    0x111(%rip),%rdi        # 1190 <main>
+    107f:	[Instruction #33] 
+ff 15 53 2f 00 00    	call   *0x2f53(%rip)        # 3fd8 <__libc_start_main@GLIBC_2.34>
+    1085:	[Instruction #34] 
+f4                   	hlt
+    1086:	[BAD] bad instruction encountered
+[Instruction #35] 
+66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+    108d:	00 00 00 
+
+0000000000001090 <deregister_tm_clones>:
+###   [LABEL] deregister_tm_clones (Type: FUNCTION, Address: 0x1090)###
+
+
+    1090:	[Instruction #36] HH 
+48 8d 3d 79 2f 00 00 	lea    0x2f79(%rip),%rdi        # 4010 <__TMC_END__>
+    1097:	[Instruction #37] HH 
+48 8d 05 72 2f 00 00 	lea    0x2f72(%rip),%rax        # 4010 <__TMC_END__>
+    109e:	[Instruction #38] HH 
+48 39 f8             	cmp    %rdi,%rax
+    10a1:	[Instruction #39] 
+74 15                	je     10b8 <deregister_tm_clones+0x28>
+    10a3:	[Instruction #40] HH 
+48 8b 05 36 2f 00 00 	mov    0x2f36(%rip),%rax        # 3fe0 <_ITM_deregisterTMCloneTable@Base>
+    10aa:	[Instruction #41] HH 
+48 85 c0             	test   %rax,%rax
+    10ad:	[Instruction #42] 
+74 09                	je     10b8 <deregister_tm_clones+0x28>
+    10af:	[Instruction #43] 
+ff e0                	jmp    *%rax
+    10b1:	[Instruction #44] 
+0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    10b8:	[Instruction #45] 
+c3                   	ret
+    10b9:	[Instruction #46] 
+0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+00000000000010c0 <register_tm_clones>:
+###   [LABEL] register_tm_clones (Type: FUNCTION, Address: 0x10c0)###
+
+
+    10c0:	[Instruction #47] HH 
+48 8d 3d 49 2f 00 00 	lea    0x2f49(%rip),%rdi        # 4010 <__TMC_END__>
+    10c7:	[Instruction #48] HH 
+48 8d 35 42 2f 00 00 	lea    0x2f42(%rip),%rsi        # 4010 <__TMC_END__>
+    10ce:	[Instruction #49] HH 
+48 29 fe             	sub    %rdi,%rsi
+    10d1:	[Instruction #50] HH 
+48 89 f0             	mov    %rsi,%rax
+    10d4:	[Instruction #51] HH 
+48 c1 ee 3f          	shr    $0x3f,%rsi
+    10d8:	[Instruction #52] HH 
+48 c1 f8 03          	sar    $0x3,%rax
+    10dc:	[Instruction #53] HH 
+48 01 c6             	add    %rax,%rsi
+    10df:	[Instruction #54] HH 
+48 d1 fe             	sar    $1,%rsi
+    10e2:	[Instruction #55] 
+74 14                	je     10f8 <register_tm_clones+0x38>
+    10e4:	[Instruction #56] HH 
+48 8b 05 05 2f 00 00 	mov    0x2f05(%rip),%rax        # 3ff0 <_ITM_registerTMCloneTable@Base>
+    10eb:	[Instruction #57] HH 
+48 85 c0             	test   %rax,%rax
+    10ee:	[Instruction #58] 
+74 08                	je     10f8 <register_tm_clones+0x38>
+    10f0:	[Instruction #59] 
+ff e0                	jmp    *%rax
+    10f2:	[BAD] bad instruction encountered
+[Instruction #60] 
+66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    10f8:	[Instruction #61] 
+c3                   	ret
+    10f9:	[Instruction #62] 
+0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001100 <__do_global_dtors_aux>:
+###   [LABEL] __do_global_dtors_aux (Type: FUNCTION, Address: 0x1100)###
+
+
+    1100:	[Instruction #63] 
+f3 0f 1e fa          	endbr64
+    1104:	[Instruction #64] 
+80 3d 05 2f 00 00 00 	cmpb   $0x0,0x2f05(%rip)        # 4010 <__TMC_END__>
+    110b:	[Instruction #65] 
+75 2b                	jne    1138 <__do_global_dtors_aux+0x38>
+    110d:	[Instruction #66] 
+55                   	push   %rbp
+    110e:	[Instruction #67] HH 
+48 83 3d e2 2e 00 00 	cmpq   $0x0,0x2ee2(%rip)        # 3ff8 <__cxa_finalize@GLIBC_2.2.5>
+    1115:	00 
+    1116:	[Instruction #68] HH 
+48 89 e5             	mov    %rsp,%rbp
+    1119:	[Instruction #69] 
+74 0c                	je     1127 <__do_global_dtors_aux+0x27>
+    111b:	[Instruction #70] HH 
+48 8b 3d e6 2e 00 00 	mov    0x2ee6(%rip),%rdi        # 4008 <__dso_handle>
+    1122:	[Instruction #71] 
+e8 19 ff ff ff       	call   1040 <__cxa_finalize@plt>
+    1127:	[Instruction #72] 
+e8 64 ff ff ff       	call   1090 <deregister_tm_clones>
+    112c:	[Instruction #73] 
+c6 05 dd 2e 00 00 01 	movb   $0x1,0x2edd(%rip)        # 4010 <__TMC_END__>
+    1133:	[Instruction #74] 
+5d                   	pop    %rbp
+    1134:	[Instruction #75] 
+c3                   	ret
+    1135:	[Instruction #76] 
+0f 1f 00             	nopl   (%rax)
+    1138:	[Instruction #77] 
+c3                   	ret
+    1139:	[Instruction #78] 
+0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001140 <frame_dummy>:
+###   [LABEL] frame_dummy (Type: FUNCTION, Address: 0x1140)###
+
+
+    1140:	[Instruction #79] 
+f3 0f 1e fa          	endbr64
+    1144:	[Instruction #80] 
+e9 77 ff ff ff       	jmp    10c0 <register_tm_clones>
+
+0000000000001149 <suma>:
+###   [LABEL] suma (Type: FUNCTION, Address: 0x1149)###
+
+
+    1149:	[Instruction #81] 
+f3 0f 1e fa          	endbr64
+    114d:	[Instruction #82] 
+55                   	push   %rbp
+    114e:	[Instruction #83] HH 
+48 89 e5             	mov    %rsp,%rbp
+    1151:	[Instruction #84] 
+89 7d fc             	mov    %edi,-0x4(%rbp)
+    1154:	[Instruction #85] 
+89 75 f8             	mov    %esi,-0x8(%rbp)
+    1157:	[Instruction #86] 
+8b 55 fc             	mov    -0x4(%rbp),%edx
+    115a:	[Instruction #87] 
+8b 45 f8             	mov    -0x8(%rbp),%eax
+    115d:	[Instruction #88] 
+01 d0                	add    %edx,%eax
+    115f:	[Instruction #89] 
+5d                   	pop    %rbp
+    1160:	[Instruction #90] 
+c3                   	ret
+
+0000000000001161 <factorial>:
+###   [LABEL] factorial (Type: FUNCTION, Address: 0x1161)###
+
+
+    1161:	[Instruction #91] 
+f3 0f 1e fa          	endbr64
+    1165:	[Instruction #92] 
+55                   	push   %rbp
+    1166:	[Instruction #93] HH 
+48 89 e5             	mov    %rsp,%rbp
+    1169:	[Instruction #94] HH 
+48 83 ec 10          	sub    $0x10,%rsp
+    116d:	[Instruction #95] 
+89 7d fc             	mov    %edi,-0x4(%rbp)
+    1170:	[Instruction #96] 
+83 7d fc 01          	cmpl   $0x1,-0x4(%rbp)
+    1174:	[Instruction #97] 
+7f 07                	jg     117d <factorial+0x1c>
+    1176:	[Instruction #98] 
+b8 01 00 00 00       	mov    $0x1,%eax
+    117b:	[Instruction #99] 
+eb 11                	jmp    118e <factorial+0x2d>
+    117d:	[Instruction #100] 
+8b 45 fc             	mov    -0x4(%rbp),%eax
+    1180:	[Instruction #101] 
+83 e8 01             	sub    $0x1,%eax
+    1183:	[Instruction #102] 
+89 c7                	mov    %eax,%edi
+    1185:	[Instruction #103] 
+e8 d7 ff ff ff       	call   1161 <factorial>
+    118a:	[Instruction #104] 
+0f af 45 fc          	imul   -0x4(%rbp),%eax
+    118e:	[Instruction #105] 
+c9                   	leave
+    118f:	[Instruction #106] 
+c3                   	ret
+
+0000000000001190 <main>:
+###   [LABEL] main (Type: FUNCTION, Address: 0x1190)###
+
+
+    1190:	[Instruction #107] 
+f3 0f 1e fa          	endbr64
+    1194:	[Instruction #108] 
+55                   	push   %rbp
+    1195:	[Instruction #109] HH 
+48 89 e5             	mov    %rsp,%rbp
+    1198:	[Instruction #110] HH 
+48 83 ec 10          	sub    $0x10,%rsp
+    119c:	[Instruction #111] 
+c7 45 f4 0a 00 00 00 	movl   $0xa,-0xc(%rbp)
+    11a3:	[Instruction #112] 
+c7 45 f8 14 00 00 00 	movl   $0x14,-0x8(%rbp)
+    11aa:	[Instruction #113] 
+8b 55 f8             	mov    -0x8(%rbp),%edx
+    11ad:	[Instruction #114] 
+8b 45 f4             	mov    -0xc(%rbp),%eax
+    11b0:	[Instruction #115] 
+89 d6                	mov    %edx,%esi
+    11b2:	[Instruction #116] 
+89 c7                	mov    %eax,%edi
+    11b4:	[Instruction #117] 
+e8 90 ff ff ff       	call   1149 <suma>
+    11b9:	[Instruction #118] 
+89 45 fc             	mov    %eax,-0x4(%rbp)
+    11bc:	[Instruction #119] 
+8b 4d fc             	mov    -0x4(%rbp),%ecx
+    11bf:	[Instruction #120] 
+8b 55 f8             	mov    -0x8(%rbp),%edx
+    11c2:	[Instruction #121] 
+8b 45 f4             	mov    -0xc(%rbp),%eax
+    11c5:	[Instruction #122] 
+89 c6                	mov    %eax,%esi
+    11c7:	[Instruction #123] HH 
+48 8d 05 36 0e 00 00 	lea    0xe36(%rip),%rax        # 2004 <_IO_stdin_used+0x4>
+    11ce:	[Instruction #124] HH 
+48 89 c7             	mov    %rax,%rdi
+    11d1:	[Instruction #125] 
+b8 00 00 00 00       	mov    $0x0,%eax
+    11d6:	[Instruction #126] 
+e8 75 fe ff ff       	call   1050 <printf@plt>
+    11db:	[Instruction #127] 
+bf 05 00 00 00       	mov    $0x5,%edi
+    11e0:	[Instruction #128] 
+e8 7c ff ff ff       	call   1161 <factorial>
+    11e5:	[Instruction #129] 
+89 c6                	mov    %eax,%esi
+    11e7:	[Instruction #130] HH 
+48 8d 05 2c 0e 00 00 	lea    0xe2c(%rip),%rax        # 201a <_IO_stdin_used+0x1a>
+    11ee:	[Instruction #131] HH 
+48 89 c7             	mov    %rax,%rdi
+    11f1:	[Instruction #132] 
+b8 00 00 00 00       	mov    $0x0,%eax
+    11f6:	[Instruction #133] 
+e8 55 fe ff ff       	call   1050 <printf@plt>
+    11fb:	[Instruction #134] 
+b8 00 00 00 00       	mov    $0x0,%eax
+    1200:	[Instruction #135] 
+c9                   	leave
+    1201:	[Instruction #136] 
+c3                   	ret
+
+Disassembly of section .fini:
+>>> SECTION: .fini (Arch: elf64-x86-64)
+
+
+
+0000000000001204 <_fini>:
+###   [LABEL] _fini (Type: FUNCTION, Address: 0x1204)###
+
+
+    1204:	[Instruction #137] 
+f3 0f 1e fa          	endbr64
+    1208:	[Instruction #138] HH 
+48 83 ec 08          	sub    $0x8,%rsp
+    120c:	[Instruction #139] HH 
+48 83 c4 08          	add    $0x8,%rsp
+    1210:	[Instruction #140] 
+c3                   	ret
+
+[INFO] Instructions written to: disasm_output.txt
+
+╔════════════════════════════════════════════════════════╗
+║               INSTRUCTION STATISTICS                   ║
+║ Architecture: elf64-x86-64                             ║
+╠════════════════════════════════════════════════════════╣
+║ Total files processed:                 0 
+║ Total sections processed:              6 
+║ Total labels processed:                12 
+║ Total instructions:                    140 
+║ Invalid instructions (BAD):            4 
+╚════════════════════════════════════════════════════════╝
+║ Regex pattern dereference (file):      0        
+║ Regex pattern indirect call (file):    0        
+╚════════════════════════════════════════════════════════╝
+
+[INFO] Plugin closed
